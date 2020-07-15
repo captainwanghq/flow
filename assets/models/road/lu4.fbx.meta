@@ -1,0 +1,75 @@
+{
+  "ver": "1.3.21",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "9cb4e192-94e7-4e08-bd6d-ffe1fdb0cd25",
+  "files": [],
+  "subMetas": {
+    "576b2": {
+      "importer": "gltf-mesh",
+      "uuid": "9cb4e192-94e7-4e08-bd6d-ffe1fdb0cd25@576b2",
+      "displayName": "",
+      "id": "576b2",
+      "name": "lu04_0.mesh",
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".json",
+        ".bin"
+      ],
+      "subMetas": {},
+      "userData": {
+        "gltfIndex": 0
+      }
+    },
+    "1f57d": {
+      "importer": "gltf-material",
+      "uuid": "9cb4e192-94e7-4e08-bd6d-ffe1fdb0cd25@1f57d",
+      "displayName": "",
+      "id": "1f57d",
+      "name": "Default OBJ.010.material",
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {},
+      "userData": {
+        "gltfIndex": 0
+      }
+    },
+    "1331b": {
+      "importer": "gltf-scene",
+      "uuid": "9cb4e192-94e7-4e08-bd6d-ffe1fdb0cd25@1331b",
+      "displayName": "",
+      "id": "1331b",
+      "name": "lu4.prefab",
+      "ver": "1.0.11",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {},
+      "userData": {
+        "gltfIndex": 0
+      }
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "redirect": "9cb4e192-94e7-4e08-bd6d-ffe1fdb0cd25@1331b",
+    "assetFinder": {
+      "meshes": [
+        "9cb4e192-94e7-4e08-bd6d-ffe1fdb0cd25@576b2"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "9cb4e192-94e7-4e08-bd6d-ffe1fdb0cd25@1f57d"
+      ],
+      "scenes": [
+        "9cb4e192-94e7-4e08-bd6d-ffe1fdb0cd25@1331b"
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "ver": "1.3.21",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "376b4e82-4e72-40e0-b1eb-439349c4e1e7",
+  "files": [],
+  "subMetas": {
+    "9ae56": {
+      "importer": "gltf-scene",
+      "uuid": "376b4e82-4e72-40e0-b1eb-439349c4e1e7@9ae56",
+      "displayName": "",
+      "id": "9ae56",
+      "name": "lu2.prefab",
+      "ver": "1.0.11",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {},
+      "userData": {
+        "gltfIndex": 0
+      }
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "redirect": "376b4e82-4e72-40e0-b1eb-439349c4e1e7@9ae56",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "376b4e82-4e72-40e0-b1eb-439349c4e1e7@9ae56"
+      ]
+    }
+  }
+}

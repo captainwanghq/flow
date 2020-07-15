@@ -1,0 +1,75 @@
+{
+  "ver": "1.3.21",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "392b9666-159a-45a9-9fe9-fdfdd46ce69a",
+  "files": [],
+  "subMetas": {
+    "dfef1": {
+      "importer": "gltf-mesh",
+      "uuid": "392b9666-159a-45a9-9fe9-fdfdd46ce69a@dfef1",
+      "displayName": "",
+      "id": "dfef1",
+      "name": "Car_037_lunzi_FR_0.001.mesh",
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".json",
+        ".bin"
+      ],
+      "subMetas": {},
+      "userData": {
+        "gltfIndex": 0
+      }
+    },
+    "ea6e2": {
+      "importer": "gltf-material",
+      "uuid": "392b9666-159a-45a9-9fe9-fdfdd46ce69a@ea6e2",
+      "displayName": "",
+      "id": "ea6e2",
+      "name": "DefaultMaterial.material",
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {},
+      "userData": {
+        "gltfIndex": 0
+      }
+    },
+    "49a60": {
+      "importer": "gltf-scene",
+      "uuid": "392b9666-159a-45a9-9fe9-fdfdd46ce69a@49a60",
+      "displayName": "",
+      "id": "49a60",
+      "name": "wheel_37.prefab",
+      "ver": "1.0.11",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {},
+      "userData": {
+        "gltfIndex": 0
+      }
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "redirect": "392b9666-159a-45a9-9fe9-fdfdd46ce69a@49a60",
+    "assetFinder": {
+      "meshes": [
+        "392b9666-159a-45a9-9fe9-fdfdd46ce69a@dfef1"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "392b9666-159a-45a9-9fe9-fdfdd46ce69a@ea6e2"
+      ],
+      "scenes": [
+        "392b9666-159a-45a9-9fe9-fdfdd46ce69a@49a60"
+      ]
+    }
+  }
+}
