@@ -1,17 +1,31 @@
-import { _decorator, Component, Node, LabelComponent, SpriteComponent } from 'cc';
+import { _decorator, Component, Node, LabelComponent, SpriteComponent, SpriteFrame, loader, Texture2D } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('ManUnit')
 export class ManUnit extends Component {
-    mSite = 0;
+    _site = 0;
+    _data = null;
     start () {
-        let sp = this.getComponentInChildren(SpriteComponent);
     }
     updateItem(data)
     {
-        this.mSite = data.site;
+        this._site = data.site;
+        this._data = data;
         let lv = this.getComponentInChildren(LabelComponent);
         lv.string = data.level.toString();
+        let path = `icon/${data.level}/texture`
+        if (data.level < 10 )
+        {
+            path = `icon/0${data.level}/texture`
+        }
+  
+        loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
+            const spriteFrame = new SpriteFrame()
+            spriteFrame.texture = texture;
+            this.node.getComponentInChildren(SpriteComponent).spriteFrame = spriteFrame;
+        });  
     }
     // update (dt) {}
 }
+
+

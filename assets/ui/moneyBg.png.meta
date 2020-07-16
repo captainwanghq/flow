@@ -1,0 +1,73 @@
+{
+  "ver": "1.0.18",
+  "importer": "image",
+  "imported": true,
+  "uuid": "f0082bda-5e13-4da8-a58f-058cb49c11f7",
+  "files": [
+    ".png",
+    ".json"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "f0082bda-5e13-4da8-a58f-058cb49c11f7@6c48a",
+      "displayName": "moneyBg",
+      "id": "6c48a",
+      "name": "texture",
+      "ver": "1.0.19",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {},
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "premultiplyAlpha": false,
+        "anisotropy": 1,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "f0082bda-5e13-4da8-a58f-058cb49c11f7"
+      }
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "f0082bda-5e13-4da8-a58f-058cb49c11f7@f9941",
+      "displayName": "moneyBg",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "ver": "1.0.8",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {},
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": 0,
+        "trimX": 0,
+        "trimY": 0,
+        "width": 70,
+        "height": 46,
+        "rawWidth": 70,
+        "rawHeight": 46,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 22,
+        "borderRight": 22,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "f0082bda-5e13-4da8-a58f-058cb49c11f7@6c48a",
+        "atlasUuid": ""
+      }
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "redirect": "f0082bda-5e13-4da8-a58f-058cb49c11f7@f9941"
+  }
+}

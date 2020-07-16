@@ -1,0 +1,15 @@
+{
+  "ver": "2.0.14",
+  "importer": "typescript",
+  "imported": true,
+  "uuid": "a3ebea8a-ace1-4598-be5c-8936c7f91b76",
+  "files": [
+    ".js",
+    ".trans"
+  ],
+  "subMetas": {},
+  "userData": {
+    "importAsPlugin": false,
+    "moduleId": "project:///assets/scripts/merge/ProduceCoin.js"
+  }
+}

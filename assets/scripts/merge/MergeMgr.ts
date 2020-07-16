@@ -9,7 +9,6 @@ export class MergeMgr extends Component {
     public getStaticSites()
     {
         let size =  cc.size(720,1280); //cc.view.getVisibleSize()
-        console.log(size)
         let w = size.width;
         let h = size.height;
         let allSites = []
