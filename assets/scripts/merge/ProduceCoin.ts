@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, LabelComponent } from 'cc';
+import { _decorator, Component, Node, LabelComponent, game, tween, Vec3, CCObject } from 'cc';
 import { CfgMgr } from '../data/CfgMgr';
 import { ManUnit } from './ManUnit';
 const { ccclass, property } = _decorator;
@@ -7,26 +7,37 @@ const { ccclass, property } = _decorator;
 export class ProduceCoin extends Component {
     
     private _timeCount:number = 0
+    private _startPos:Vec3 =  new Vec3(0,0,0)
     start () {
         // Your initialization goes here.
+        let textIncome = this.node.getChildByName("txtIncome")
+        this._startPos = new Vec3(textIncome.position)
+        
     }
 
     update (deltaTime: number) {
   
        let level = this.getComponent(ManUnit)._data.level;
        let cfg =  CfgMgr.getInstance().getCar(level);
-       console.log(level,cfg)
+     
        if(cfg!=null)
        {
-            this._timeCount++;
-           if(this._timeCount>cfg.output_gold_second*60/1000)
+           this._timeCount+=deltaTime*1000;
+           if(this._timeCount>cfg.gold_interval)
            {
-               this._timeCount = 0;
+               this._timeCount -= cfg.gold_interval;
                let textIncome = this.node.getChildByName("txtIncome")
                textIncome.getComponent(LabelComponent).string = cfg.output_gold
                textIncome.active = true
+               let pos = this._startPos
+               let nPos = new Vec3(pos.x,pos.y+80,pos.z)
+               textIncome.position = this._startPos
+               tween(textIncome).to(0.5,{position:nPos}).call(()=>{
+                   // textIncome.position = this._startPos
+                    console.log(this._startPos)
+                    textIncome.active = false
+               }).start()
            }
        }
-
     }
 }

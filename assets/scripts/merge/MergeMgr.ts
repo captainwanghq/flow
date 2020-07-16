@@ -4,7 +4,7 @@ const { ccclass, property } = _decorator;
 @ccclass('MergeMgr')
 export class MergeMgr extends Component {
     
-    siteleveList =  [0,1,2,3,0,1,2,3,3,2,1,0];
+    siteleveList = [0,1,1,0,0,1,1,0,0,1,1,0];//  [0,1,2,3,0,1,2,3,3,2,1,0];
 
     public getStaticSites()
     {
@@ -16,7 +16,7 @@ export class MergeMgr extends Component {
         {
             for(let j=0;j<4;j++)
             {
-                allSites.push(new Vec3(90+180*j-w/2,200+200*i-h/2,-1))
+                allSites.push(new Vec3(90+180*j-w/2,220+180*i-h/2,-1))
             }
         }
         return allSites

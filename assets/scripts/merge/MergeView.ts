@@ -89,7 +89,7 @@ export class MergeView extends Component {
         for(let i =0;i<allSites.length;++i)
         {
             let worldPos = this.getComponent(UITransformComponent).convertToWorldSpaceAR(allSites[i]);
-            if(worldPos.x-90<pos.x && worldPos.x+90>pos.x && worldPos.y-100<pos.y && worldPos.y+100>pos.y )
+            if(worldPos.x-90<pos.x && worldPos.x+90>pos.x && worldPos.y-90<pos.y && worldPos.y+90>pos.y )
             {
                 return i;
             }
