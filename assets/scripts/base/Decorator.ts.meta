@@ -2,7 +2,7 @@
   "ver": "2.0.14",
   "importer": "typescript",
   "imported": true,
-  "uuid": "76527ef5-fc5b-4f9b-a8bd-9e9729193ac8",
+  "uuid": "9be98148-d7f4-431b-83ef-82633937d99a",
   "files": [
     ".js",
     ".trans"
@@ -10,6 +10,6 @@
   "subMetas": {},
   "userData": {
     "importAsPlugin": false,
-    "moduleId": "project:///assets/scripts/merge/MergeMgr.js"
+    "moduleId": "project:///assets/scripts/base/Decorator.js"
   }
 }

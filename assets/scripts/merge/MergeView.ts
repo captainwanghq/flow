@@ -1,5 +1,6 @@
-import { _decorator, Component, Node, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3 } from 'cc';
-import { MergeMgr } from './MergeMgr';
+import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3 } from 'cc';
+import { MergeMgr } from '../data/MergeMgr';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('MergeView')
@@ -17,7 +18,6 @@ export class MergeView extends Component {
     start () {
         
         game.config.showFPS = true
-        
         this._mergeMgr = this.getComponent(MergeMgr)
         this.node.setContentSize(cc.view.getVisibleSize());
         let allMan = this._mergeMgr.getAllMan();
@@ -186,6 +186,8 @@ export class MergeView extends Component {
     }
     public onClickAdd()
     {
+
+
         let manData  = this._mergeMgr.addMan();
         if(manData)
         {

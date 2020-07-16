@@ -1,8 +1,8 @@
 {
   "ver": "2.0.14",
-  "importer": "javascript",
+  "importer": "typescript",
   "imported": true,
-  "uuid": "eabeba19-cdc0-4685-852c-5a53966796de",
+  "uuid": "9a31ecf8-d758-431b-a244-b6b458ae8846",
   "files": [
     ".js",
     ".trans"
@@ -10,6 +10,6 @@
   "subMetas": {},
   "userData": {
     "importAsPlugin": false,
-    "moduleId": "project:///assets/scripts/data/DataSource.js"
+    "moduleId": "project:///assets/scripts/data/ShopMgr.js"
   }
 }

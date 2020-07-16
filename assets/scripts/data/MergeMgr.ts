@@ -1,11 +1,11 @@
 import { _decorator, Component, Node, Vec3 } from 'cc';
+import { CfgMgr } from '../data/CfgMgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('MergeMgr')
-export class MergeMgr extends Component {
+export class MergeMgr extends g.BaseMgr {
     
     siteleveList = [0,1,1,0,0,1,1,0,0,1,1,0];//  [0,1,2,3,0,1,2,3,3,2,1,0];
-
     public getStaticSites()
     {
         let size =  cc.size(720,1280); //cc.view.getVisibleSize()
@@ -82,5 +82,34 @@ export class MergeMgr extends Component {
                 return 2;
             }
         }
+    }
+
+    public findCarMaxLevel()
+    {
+        let lev = 1
+
+        return lev
+    }
+    public recommendCar()
+    {
+        const lev = this.findCarMaxLevel()
+        let cfg =  CfgMgr.getInstance().getCar(lev)
+        let  lockCarId = cfg.unlock_buy_gold_level
+        let num = Math.max(lockCarId-4,1)
+        let d = 9999999;
+        let result = num;
+        for (let i=num; i<=lockCarId ;++i)
+        {   
+            let item = CfgMgr.getInstance().getCar(i)
+            let price =  item.buy_gold
+            let carEarings = item.output_gold
+            let num2 = price/carEarings
+            if (num2 < d)
+            {
+                d = num2;
+				result = i
+            }
+        }
+        return CfgMgr.getInstance().getCar(result)
     }
 }
