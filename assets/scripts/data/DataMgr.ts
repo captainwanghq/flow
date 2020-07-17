@@ -1,7 +1,8 @@
-import { _decorator} from 'cc';
-const { ccclass, property } = _decorator;
+import { _decorator } from 'cc';
+import BaseMgr from '../base/BaseMgr';
+const { ccclass} = _decorator;
 @ccclass('DataMgr')
-export class DataMgr extends g.BaseMgr {
+export class DataMgr extends BaseMgr {
 
     private _money:number = 10000;
     public addMoney(money:number):void

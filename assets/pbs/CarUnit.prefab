@@ -42,10 +42,13 @@
       },
       {
         "__id__": 21
+      },
+      {
+        "__id__": 22
       }
     ],
     "_prefab": {
-      "__id__": 22
+      "__id__": 23
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -595,6 +598,16 @@
     },
     "_enabled": true,
     "_opacity": 255,
+    "_id": ""
+  },
+  {
+    "__type__": "1237efDZNZLnL7wd1A1WhVp",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
     "_id": ""
   },
   {

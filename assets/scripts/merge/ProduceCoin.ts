@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, LabelComponent, game, tween, Vec3, CCObject } from 'cc';
+import { _decorator, Component, LabelComponent, tween, Vec3 } from 'cc';
 import { CfgMgr } from '../data/CfgMgr';
 import { ManUnit } from './ManUnit';
 const { ccclass, property } = _decorator;
@@ -34,7 +34,6 @@ export class ProduceCoin extends Component {
                textIncome.position = this._startPos
                tween(textIncome).to(0.5,{position:nPos}).call(()=>{
                    // textIncome.position = this._startPos
-                    console.log(this._startPos)
                     textIncome.active = false
                }).start()
            }

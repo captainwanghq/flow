@@ -1,7 +1,8 @@
-import { _decorator, Component, Node } from 'cc';
+
 import { CfgMgr } from './CfgMgr';
-import { DataMgr } from './DataMgr';
-const { ccclass, property } = _decorator;
+import { _decorator} from 'cc';
+import BaseMgr from '../base/BaseMgr';
+const { ccclass} = _decorator;
 
 enum eCarBoughtState
 {
@@ -17,7 +18,7 @@ enum eCarBuyType
     Locked = 2
 }
 @ccclass('ShopMgr')
-export class ShopMgr extends g.BaseMgr {
+export class ShopMgr extends BaseMgr {
     
     private  boughDiscount:number = 0;
     

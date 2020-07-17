@@ -1,6 +1,7 @@
-import { _decorator, Component } from 'cc';
+import { _decorator } from 'cc';
 import DataSource from "./DataSource";
-const { ccclass, property } = _decorator;
+import BaseMgr from '../base/BaseMgr';
+const { ccclass} = _decorator;
 
 @ccclass('CfgMgr')
 export class CfgMgr extends g.BaseMgr {

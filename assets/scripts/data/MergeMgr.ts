@@ -1,9 +1,12 @@
-import { _decorator, Component, Node, Vec3 } from 'cc';
-import { CfgMgr } from '../data/CfgMgr';
-const { ccclass, property } = _decorator;
 
-@ccclass('MergeMgr')
-export class MergeMgr extends g.BaseMgr {
+import { CfgMgr } from '../data/CfgMgr';
+
+import { _decorator ,Vec3} from 'cc';
+import BaseMgr from '../base/BaseMgr';
+// const { ccclass} = _decorator;
+// @ccclass('MergeMgr')
+
+export class MergeMgr extends BaseMgr {
     
     siteleveList = [0,1,1,0,0,1,1,0,0,1,1,0];//  [0,1,2,3,0,1,2,3,3,2,1,0];
     public getStaticSites()

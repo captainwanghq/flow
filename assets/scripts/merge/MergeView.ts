@@ -1,6 +1,5 @@
 import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3 } from 'cc';
 import { MergeMgr } from '../data/MergeMgr';
-
 const { ccclass, property } = _decorator;
 
 @ccclass('MergeView')
@@ -14,13 +13,10 @@ export class MergeView extends Component {
     draggingMan = null;
     isDragging = false;
     manList=[];
-    _mergeMgr:MergeMgr= null;
     start () {
-        
         game.config.showFPS = true
-        this._mergeMgr = this.getComponent(MergeMgr)
         this.node.setContentSize(cc.view.getVisibleSize());
-        let allMan = this._mergeMgr.getAllMan();
+        let allMan = MergeMgr.getInstance().getAllMan();
         for(let i=0;i<allMan.length;++i)
         {  
             let lv = allMan[i];
@@ -45,7 +41,7 @@ export class MergeView extends Component {
                 this.selectedMan = man;
                 if(man!=null)
                 {
-                    let lv = this._mergeMgr.getManLevel(site)
+                    let lv = MergeMgr.getInstance().getManLevel(site)
                     this.draggingMan = this.cloneMan(man,site,lv);
                     this.isDragging = true;
                 }    
@@ -85,7 +81,7 @@ export class MergeView extends Component {
     }
     checkSite(pos:Vec2)
     {
-        let allSites = this._mergeMgr.getStaticSites();
+        let allSites = MergeMgr.getInstance().getStaticSites();
         for(let i =0;i<allSites.length;++i)
         {
             let worldPos = this.getComponent(UITransformComponent).convertToWorldSpaceAR(allSites[i]);
@@ -100,14 +96,14 @@ export class MergeView extends Component {
     checkEnd(event)
     {
         let siteId = this.checkSite(event.touch.getLocation())
-        let allSites = this._mergeMgr.getStaticSites();
+        let allSites = MergeMgr.getInstance().getStaticSites();
         if(siteId >=0)
         {
             let distMan = this.manList[siteId];
             if(distMan!=null)
             {
-                let selectedLv = this._mergeMgr.getManLevel(this.selectedId);
-                let ret = this._mergeMgr.exchangeMan(this.selectedId,siteId)
+                let selectedLv = MergeMgr.getInstance().getManLevel(this.selectedId);
+                let ret =MergeMgr.getInstance().exchangeMan(this.selectedId,siteId)
 
                 if(ret == 0)
                 {   //起点和目的点是同一个座位
@@ -123,7 +119,7 @@ export class MergeView extends Component {
                     this.move(this.draggingMan,new Vec3(-100,0,0))
                     tween(this.draggingMan).to(0.1,{position:allSites[siteId]}).start()
                     tween(newMan).to(0.1,{position:allSites[siteId]}).call(()=>{
-                        let lv = this._mergeMgr.getManLevel(siteId);
+                        let lv = MergeMgr.getInstance().getManLevel(siteId);
                         this.manList[siteId].getComponent("ManUnit").updateItem({site:siteId,level:lv})
                         this.manList[this.selectedId] = null; 
                         newMan.parent = null;
@@ -134,8 +130,8 @@ export class MergeView extends Component {
                 }
                 else if(ret == 2)
                 {
-                    this.manList[siteId].getComponent("ManUnit").updateItem({site:siteId,level:this._mergeMgr.getManLevel(siteId)})
-                    this.manList[this.selectedId].getComponent("ManUnit").updateItem({site:this.selectedId,level:this._mergeMgr.getManLevel(this.selectedId)})
+                    this.manList[siteId].getComponent("ManUnit").updateItem({site:siteId,level:MergeMgr.getInstance().getManLevel(siteId)})
+                    this.manList[this.selectedId].getComponent("ManUnit").updateItem({site:this.selectedId,level:MergeMgr.getInstance().getManLevel(this.selectedId)})
                     this.selectedMan.getComponent(UIOpacityComponent).opacity = 255;
                     this.selectedMan = null;
                     this.selectedId = -1;
@@ -144,7 +140,7 @@ export class MergeView extends Component {
                 }
             }
             else{
-                this._mergeMgr.exchangeMan(this.selectedId,siteId)
+                MergeMgr.getInstance().exchangeMan(this.selectedId,siteId)
                 //目的点是空位
                 tween(this.draggingMan).to(0.02,{position:allSites[siteId]}).call(()=>{      
                         this.draggingMan.parent = null;
@@ -176,7 +172,7 @@ export class MergeView extends Component {
     // update (dt) {}
     createMan(siteId,lv)
     {
-        let allSites = this._mergeMgr.getStaticSites();
+        let allSites = MergeMgr.getInstance().getStaticSites();
         let ps = allSites[siteId];
         let man  = cc.instantiate(this.pbMan) 
         man.parent = this.node
@@ -186,9 +182,7 @@ export class MergeView extends Component {
     }
     public onClickAdd()
     {
-
-
-        let manData  = this._mergeMgr.addMan();
+        let manData  = MergeMgr.getInstance().addMan();
         if(manData)
         {
             let man = this.createMan(manData.site,manData.level);
