@@ -18,14 +18,16 @@ export class ManUnit extends Component {
         {
             path = `icon/0${data.level}/texture`
         }
-  
         loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
             const spriteFrame = new SpriteFrame()
             spriteFrame.texture = texture;
             this.node.getComponentInChildren(SpriteComponent).spriteFrame = spriteFrame;
         });  
     }
-    // update (dt) {}
+    get_data()
+    {
+        return this._data
+    }
 }
 
 

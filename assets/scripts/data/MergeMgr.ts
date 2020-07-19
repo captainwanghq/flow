@@ -1,118 +1,335 @@
+import BaseMgr from "../base/BaseMgr";
+import { Vec3 } from "cc";
+import data from "./DataSource";
+import { CfgMgr } from "./CfgMgr";
+import { ShopMgr } from "./ShopMgr";
+import { DataMgr } from "./DataMgr";
+import EventMgr from "../base/event/EventMgr";
+class car_data
+{
+    public level:number
+    public site:number
+    public filled:number
+    constructor(level,site,filled){
+        this.level = level
+        this.site = site
+        this.filled = filled
+    }
+}
 
-import { CfgMgr } from '../data/CfgMgr';
+class site_shape{
 
-import { _decorator ,Vec3} from 'cc';
-import BaseMgr from '../base/BaseMgr';
-// const { ccclass} = _decorator;
-// @ccclass('MergeMgr')
-
-export class MergeMgr extends BaseMgr {
+    static get_all_site_pos(car_site_num)
+    {
+        if(car_site_num ==4)
+        {	
+            return [
+                new Vec3(270,500)
+                ,new Vec3(450,500)
+                ,new Vec3(270,350)
+                ,new Vec3(450,350)]
+        }
+        else if(car_site_num ==5)
+        {	
+            return [
+                new Vec3(270,500)
+                ,new Vec3(450,500)
+                ,new Vec3(270,350)
+                ,new Vec3(450,350)
+                ,new Vec3(360,200)]
     
-    siteleveList = [0,1,1,0,0,1,1,0,0,1,1,0];//  [0,1,2,3,0,1,2,3,3,2,1,0];
-    public getStaticSites()
-    {
-        let size =  cc.size(720,1280); //cc.view.getVisibleSize()
-        let w = size.width;
-        let h = size.height;
-        let allSites = []
-        for(let i =0 ;i<3;i++)
-        {
-            for(let j=0;j<4;j++)
-            {
-                allSites.push(new Vec3(90+180*j-w/2,220+180*i-h/2,-1))
-            }
         }
-        return allSites
-    }
-
-    public getAllMan()
-    {
-        return this.siteleveList;
-    }
-
-    public getManLevel(site)
-    {
-        return this.siteleveList[site];
-    }
-
-    public setManLevel(site,lv)
-    {
-        this.siteleveList[site] = lv
-    }
-
-    public getBlankSite()
-    {
-        for(let i=0;i<this.siteleveList.length;++i)
+        else if(car_site_num == 6)
         {
-            if(this.siteleveList[i]<=0)
-            {
-                return i
-            }
+            return [
+                new Vec3(270,500)
+                ,new Vec3(450,500)
+                ,new Vec3(270,350)
+                ,new Vec3(450,350)
+                ,new Vec3(270,200)
+                ,new Vec3(450,200)]
         }
-        return -1;
+        else if(car_site_num == 7)
+        {
+            return [	
+                new Vec3(180,500)
+                ,new Vec3(360,500)
+                ,new Vec3(540,500)
+                ,new Vec3(180,350)
+                ,new Vec3(360,350)
+                ,new Vec3(540,350)
+                ,new Vec3(360,200)]
+        }
+        else if(car_site_num == 8)
+        {
+            return [
+                new Vec3(180,500)
+               ,new Vec3(360,500)
+               ,new Vec3(540,500)
+               ,new Vec3(180,350)
+               ,new Vec3(360,350)
+               ,new Vec3(540,350)
+               ,new Vec3(270,200)
+               ,new Vec3(450,200)
+        ]
+        }
+        else if(car_site_num == 9)
+        {
+            return [
+                new Vec3(180,500)
+              ,new Vec3(360,500)
+              ,new Vec3(540,500)
+              ,new Vec3(180,350)
+              ,new Vec3(360,350)
+              ,new Vec3(540,350)
+              ,new Vec3(180,200)
+              ,new Vec3(360,200)
+              ,new Vec3(540,200)
+      ]
+        }
+        else if(car_site_num == 10)
+        {
+            return [
+                new Vec3(90,500)
+                ,new Vec3(270,500)
+                ,new Vec3(450,500)
+                ,new Vec3(630,500)
+                ,new Vec3(90,350)
+                ,new Vec3(270,350)
+                ,new Vec3(450,350)
+                ,new Vec3(630,350)
+                ,new Vec3(270,200)
+                ,new Vec3(450,200)]
+                
+        }
+        else if(car_site_num == 11)
+        {
+            return [
+                new Vec3(90,500)
+                ,new Vec3(270,500)
+                ,new Vec3(450,500)
+                ,new Vec3(630,500)
+                ,new Vec3(90,350)
+                ,new Vec3(270,350)
+                ,new Vec3(450,350)
+                ,new Vec3(630,350)
+                ,new Vec3(180,200)
+                ,new Vec3(360,200)
+                ,new Vec3(540,200)]
+        }
+        else if(car_site_num == 12)
+        {
+            return [
+                new Vec3(90,500)
+                ,new Vec3(270,500)
+                ,new Vec3(450,500)
+                ,new Vec3(630,500)
+                ,new Vec3(90,350)
+                ,new Vec3(270,350)
+                ,new Vec3(450,350)
+                ,new Vec3(630,350)
+                ,new Vec3(90,200)
+                ,new Vec3(270,200)
+                ,new Vec3(450,200)
+                ,new Vec3(630,200)]
+        }
+        return [
+            new Vec3(90,500)
+            ,new Vec3(270,500)
+            ,new Vec3(450,500)
+            ,new Vec3(630,500)
+            ,new Vec3(90,350)
+            ,new Vec3(270,350)
+            ,new Vec3(450,350)
+            ,new Vec3(630,350)
+            ,new Vec3(90,200)
+            ,new Vec3(270,200)
+            ,new Vec3(450,200)
+            ,new Vec3(630,200)]
+    }
+}
+export class merge_mgr extends BaseMgr
+{
+    private car_max_level:number = 50
+    private real_car_site_num:number = 4
+    private car_data_list:car_data[] =[]
+    start()
+    {
+        for (let idx=0;idx<this.real_car_site_num;++idx)
+        {
+            this.car_data_list.push(new car_data(1,idx,1))
+        }
     }
 
-    public addMan(lv=5)
+    public add_site(max_site:number)
     {
-        let blankSite = this.getBlankSite()
-
-        if(blankSite >-1)
+        if(this.real_car_site_num < max_site)
         {
-            this.setManLevel(blankSite,lv)
-            return {site:blankSite,level:lv}
+            this.real_car_site_num++
+
+        }
+    }
+
+    public get_site_num():number{
+        return this.real_car_site_num
+    }
+
+    public get_car_data_list()
+    {
+        return this.car_data_list
+    }
+
+    public find_card_data_by_site(site:number):car_data
+    {
+        for (let idx=0;idx<this.car_data_list.length;++idx)
+        {
+            if(site==this.car_data_list[idx].site)
+            {
+                return this.car_data_list[idx]
+            }
         }
         return null
     }
-    public exchangeMan(srcSite,distSite)
+    
+    public get_all_pos()
+    {   
+       let car_site_num = this.real_car_site_num
+       let all_pos =  site_shape.get_all_site_pos(car_site_num)
+       return all_pos
+    }
+
+    public get_pos_by_site(site:number):Vec3
     {
-        if(srcSite == distSite)
+        let all_pos = this.get_all_pos()
+        if (site >=0 && this.real_car_site_num > site)
         {
-            //同一个位置
-            return 0
+            let pos = all_pos[site]
+            let new_pos = new Vec3(pos.x-360,pos.y-640,pos.z)
+            return new_pos
+        }
+        return Vec3.ZERO
+    }
+    //查找空位
+    public find_blank_site()
+    {
+        for (let idx = 0;idx<this.car_data_list.length; ++idx){
+            if( 0== this.car_data_list[idx].level){
+                return idx
+            }
+        }
+        return -1
+    }
+
+    public is_trash(v:Vec3):boolean
+    {
+        return false
+    }
+
+    public trash(site:number)
+    {
+        let data  = this.find_card_data_by_site(site)
+        if(data!=null)
+        {
+            data.level = 0
+        }
+    }
+    public buy_car_by_gold(cfg,cost)
+    {
+        let new_site = this.find_blank_site()
+        if(new_site>=0)
+        {   
+            let data = this.find_card_data_by_site(new_site)
+            data.level = cfg.level
+            DataMgr.getInstance().addMoney(-cost)
+            ShopMgr.getInstance().countBought(cfg.level)
+
+            EventMgr.getInstance().emit("","buy_car",{site:new_site,level:cfg.level})
         }
         else{
-            let srcLv =  this.getManLevel(srcSite);
-            let distLv = this.getManLevel(distSite);
-            if(srcLv == distLv)
-            {
-                this.setManLevel(distSite,distLv+1);
-                this.setManLevel(srcSite,0);
-                return 1;
-            }
-            else{
-                this.setManLevel(srcSite,distLv);
-                this.setManLevel(distSite,srcLv);
-                return 2;
-            }
+            console.log("site full")
         }
     }
+    public buy_car_by_diamond()
+    {
 
-    public findCarMaxLevel()
+    }
+
+    public is_valid_site(site:number):boolean
+    {
+        return site<0 || site >= this.real_car_site_num
+    }
+
+    private find_car_max_level():number
     {
         let lev = 1
-
+        this.car_data_list.forEach(el => {
+            if(el.level > lev){
+                lev = el.level
+            }
+        })
         return lev
     }
-    public recommendCar()
+    private check_car_max_level(lev:number)
     {
-        const lev = this.findCarMaxLevel()
-        let cfg =  CfgMgr.getInstance().getCar(lev)
-        let  lockCarId = cfg.unlock_buy_gold_level
-        let num = Math.max(lockCarId-4,1)
-        let d = 9999999;
-        let result = num;
-        for (let i=num; i<=lockCarId ;++i)
-        {   
-            let item = CfgMgr.getInstance().getCar(i)
-            let price =  item.buy_gold
-            let carEarings = item.output_gold
-            let num2 = price/carEarings
-            if (num2 < d)
-            {
-                d = num2;
-				result = i
-            }
+        const max_level = this.find_car_max_level()
+        return lev == max_level
+    }
+
+    public  merge(site1:number,site2:number):number
+    {
+        if(this.is_valid_site(site1)) return 0;
+        if(this.is_valid_site(site2)) return 0;
+        if(site1 == site2)
+        {
+            return 0
         }
-        return CfgMgr.getInstance().getCar(result)
+        let data1 = this.find_card_data_by_site(site1)
+        let data2 = this.find_card_data_by_site(site2)
+        if (data1!=null && data2!=null)
+        {
+           if (data1.level == data2.level && data1.level>0 && data1.level < this.car_max_level)
+           {
+               let ret = this.check_car_max_level(data2.level)
+               data2.level++
+               data1.level=0
+               if(ret)
+               {
+                //unlock new car
+               }
+               return 1
+           }
+           else
+           {
+               let level = data1.level
+               data1.level = data2.level
+               data2.level = level
+               if(data2.level>0 &&data1.level<=0){
+                   return 3
+               }
+               return 2
+           }
+        }
+        return 0
+    }
+
+    public get_income_per_second():number
+    {
+        let all_income = 0
+        this.car_data_list.forEach(el=>{
+            if(el.level>0){
+                const cfg =  CfgMgr.getInstance().getCar(el.level)
+                let d = 1000/cfg.gold_interval
+                let income = cfg.output_gold*d
+                all_income +=income
+            }
+        })
+        return all_income
+    }
+
+    public recommend()
+    {
+        let lv = ShopMgr.getInstance().get_most_effective_car()
+        const cfg = CfgMgr.getInstance().getCar(lv)
+        return cfg
     }
 }

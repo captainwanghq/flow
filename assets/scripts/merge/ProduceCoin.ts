@@ -1,6 +1,7 @@
 import { _decorator, Component, LabelComponent, tween, Vec3 } from 'cc';
 import { CfgMgr } from '../data/CfgMgr';
 import { ManUnit } from './ManUnit';
+import { DataMgr } from '../data/DataMgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('ProduceCoin')
@@ -32,9 +33,11 @@ export class ProduceCoin extends Component {
                let pos = this._startPos
                let nPos = new Vec3(pos.x,pos.y+80,pos.z)
                textIncome.position = this._startPos
+               
                tween(textIncome).to(0.5,{position:nPos}).call(()=>{
                    // textIncome.position = this._startPos
                     textIncome.active = false
+                    DataMgr.getInstance().addMoney(cfg.output_gold)
                }).start()
            }
        }

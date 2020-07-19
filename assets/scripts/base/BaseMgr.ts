@@ -7,7 +7,7 @@ export default class BaseMgr extends Component {
     public moduleIndex: number = 0;
     public moduleData: object = {};
 
-    public static _instance = null;
+    private static _instance = null;
     public static getInstance(): any {
         let Class = this;
         if (!Class._instance) {

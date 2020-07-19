@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, SpriteComponent, LabelComponent, Texture2D, loader, SpriteFrame } from 'cc';
-import { MergeMgr } from '../data/MergeMgr';
+import { merge_mgr } from '../data/MergeMgr';
+import { ShopMgr } from '../data/ShopMgr';
 
 const { ccclass, property } = _decorator;
 
@@ -9,10 +10,11 @@ export class AddBtn extends Component {
     carIcon:SpriteComponent =null
     @property(LabelComponent)
     carPrice:LabelComponent =null
-
+    buy_cfg =null
     start () {
-       const data =  MergeMgr.getInstance().recommendCar()
-       this.carPrice.string= data.buy_gold
+       const data =  merge_mgr.instance.recommend()
+       this.buy_cfg = data
+       this.carPrice.string= ShopMgr.getInstance().getPrice(data.level)
        let path = `icon/${data.level}/texture`
        if (data.level < 10 )
        {
@@ -24,5 +26,10 @@ export class AddBtn extends Component {
            spriteFrame.texture = texture;
            this.carIcon.spriteFrame = spriteFrame;
        }); 
+    }
+
+    onClickAdd()
+    {
+        ShopMgr.getInstance().buyCar(this.buy_cfg,0)
     }
 }
