@@ -239,7 +239,7 @@ export class merge_mgr extends base_mgr
         {   
             let data = this.find_card_data_by_site(new_site)
             data.level = cfg.level
-            data_mgr.getInstance().addMoney(-cost)
+            data_mgr.getInstance().add_money(-cost)
             shop_mgr.getInstance().countBought(cfg.level)
 
             event_mgr.getInstance().emit("","buy_car",{site:new_site,level:cfg.level})
@@ -316,7 +316,7 @@ export class merge_mgr extends base_mgr
         let all_income = 0
         this.car_data_list.forEach(el=>{
             if(el.level>0){
-                const cfg =  cfg_mgr.getInstance().getCar(el.level)
+                const cfg =  cfg_mgr.getInstance().get_car(el.level)
                 let d = 1000/cfg.gold_interval
                 let income = cfg.output_gold*d
                 all_income +=income
@@ -328,7 +328,7 @@ export class merge_mgr extends base_mgr
     public recommend()
     {
         let lv = shop_mgr.getInstance().get_most_effective_car()
-        const cfg = cfg_mgr.getInstance().getCar(lv)
+        const cfg = cfg_mgr.getInstance().get_car(lv)
         return cfg
     }
 }

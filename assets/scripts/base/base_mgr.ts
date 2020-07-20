@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('base_mgr')
@@ -17,9 +17,5 @@ export default class base_mgr extends Component {
     }
     public static get instance() {
         return this.getInstance();
-    }
-    public  onLoad():void
-    {
-
     }
 }

@@ -1,20 +1,20 @@
 import { _decorator, Component, Node, SpriteComponent, LabelComponent, Texture2D, loader, SpriteFrame } from 'cc';
-import { merge_mgr } from '../data/MergeMgr';
-import { ShopMgr } from '../data/ShopMgr';
+import { merge_mgr } from '../data/merge_mgr';
+import { shop_mgr } from '../data/shop_mgr';
 
 const { ccclass, property } = _decorator;
 
-@ccclass('AddBtn')
-export class AddBtn extends Component {
+@ccclass('add_btn')
+export class add_btn extends Component {
     @property(SpriteComponent)
-    carIcon:SpriteComponent =null
+    car_icon:SpriteComponent =null
     @property(LabelComponent)
-    carPrice:LabelComponent =null
+    car_price:LabelComponent =null
     buy_cfg =null
     start () {
        const data =  merge_mgr.instance.recommend()
        this.buy_cfg = data
-       this.carPrice.string= ShopMgr.getInstance().getPrice(data.level)
+       this.car_price.string= shop_mgr.getInstance().get_price(data.level)
        let path = `icon/${data.level}/texture`
        if (data.level < 10 )
        {
@@ -24,12 +24,12 @@ export class AddBtn extends Component {
        loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
            const spriteFrame = new SpriteFrame()
            spriteFrame.texture = texture;
-           this.carIcon.spriteFrame = spriteFrame;
+           this.car_icon.spriteFrame = spriteFrame;
        }); 
     }
 
     onClickAdd()
     {
-        ShopMgr.getInstance().buyCar(this.buy_cfg,0)
+        shop_mgr.getInstance().buyCar(this.buy_cfg,0)
     }
 }

@@ -2,7 +2,7 @@
   "ver": "2.0.14",
   "importer": "typescript",
   "imported": true,
-  "uuid": "1237e7c3-64d6-4b9c-bef0-7750355a1569",
+  "uuid": "8227d11d-37f4-42f2-8ee4-1a74c676e8b1",
   "files": [
     ".js",
     ".trans"
@@ -10,6 +10,6 @@
   "subMetas": {},
   "userData": {
     "importAsPlugin": false,
-    "moduleId": "project:///assets/scripts/merge/ManUnit.js"
+    "moduleId": "project:///assets/scripts/hall/hall_ui.js"
   }
 }

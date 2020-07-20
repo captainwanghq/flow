@@ -1,19 +1,16 @@
 import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3, sampleAnimationCurve } from 'cc';
-import { merge_mgr } from '../data/MergeMgr';
-import EventMgr from '../base/event/EventMgr';
-import data from '../data/DataSource';
+import { merge_mgr } from '../data/merge_mgr';
+import event_mgr from '../base/event/event_mgr';
+import { man_unit } from './man_unit';
 const { ccclass, property } = _decorator;
 
-@ccclass('MergeView')
-export class MergeView extends Component {
-    @property(ButtonComponent)
-    btnAdd:ButtonComponent = null;
+@ccclass('merge_view')
+export class merge_view extends Component {
     @property(Prefab)
-    pbMan:Prefab =null;
+    pb_man:Prefab =null;
     selected_id = -1;
-    draggingMan = null;
-    isDragging = false;
-    manList=[];
+    dragging_man = null;
+    is_dragging = false;
     car_list:any=[]
     site_list:any=[]
 
@@ -36,7 +33,7 @@ export class MergeView extends Component {
         for (let id=0;id<this.car_list.length;++id)
         {
             let el = this.car_list[id]
-            if (el.getComponent("ManUnit").get_data().site == site)
+            if (el.getComponent(man_unit).get_data().site == site)
             {
                 return el
             }
@@ -49,7 +46,7 @@ export class MergeView extends Component {
         for (let id=0;id<this.car_list.length;++id)
         {
             let el = this.car_list[id]
-            if (el.getComponent("ManUnit").get_data().site == site)
+            if (el.getComponent(man_unit).get_data().site == site)
             {
                 return id
             }
@@ -65,7 +62,7 @@ export class MergeView extends Component {
             {
                 let data = merge_mgr.getInstance().find_card_data_by_site(site)
                 let lv = data.level
-                this.draggingMan = this.clone_man(car,site,lv)     
+                this.dragging_man = this.clone_man(car,site,lv)     
             }
         }
     }
@@ -96,18 +93,18 @@ export class MergeView extends Component {
             let site = this.check_site(event.touch.getLocation())
             if(site>-1)
             {
-               if(this.isDragging) return 
+               if(this.is_dragging) return 
                 this.selected_id = site;
-                this.isDragging = true
+                this.is_dragging = true
                 this.snapshot(site)
             }
         },this)
 
         this.node.on(cc.Node.EventType.TOUCH_CANCEL,function(event)
         {
-            if(this.isDragging)
+            if(this.is_dragging)
             {
-                this.isDragging = false
+                this.is_dragging = false
                 this.check_end(event)
             }
         },this)
@@ -115,9 +112,9 @@ export class MergeView extends Component {
 
         this.node.on(cc.Node.EventType.TOUCH_END,function(event)
         {
-            if(this.isDragging)
+            if(this.is_dragging)
             {
-                this.isDragging = false
+                this.is_dragging = false
                 this.check_end(event)
             }
 
@@ -125,17 +122,17 @@ export class MergeView extends Component {
 
         this.node.on(cc.Node.EventType.TOUCH_MOVE,function(event)
         {   
-            if(this.isDragging)
+            if(this.is_dragging)
             {
-                if(this.draggingMan!=null)
+                if(this.dragging_man!=null)
                 {
-                    this.move(this.draggingMan,new Vec3(event.getDelta().x,event.getDelta().y,0))
+                    this.move(this.dragging_man,new Vec3(event.getDelta().x,event.getDelta().y,0))
                 }
             }
         },this)
 
 
-        EventMgr.getInstance().on("","buy_car",this.buy_car,this)
+        event_mgr.getInstance().on("","buy_car",this.buy_car,this)
     }
     buy_car(data)
     {
@@ -159,10 +156,10 @@ export class MergeView extends Component {
     
     private destroy_snapshot()
     {
-        this.draggingMan.parent = null
-        this.draggingMan = null
+        this.dragging_man.parent = null
+        this.dragging_man = null
         this.selected_id = -1
-        this.isDragging = false
+        this.is_dragging = false
     }
     
     private remove_car_by_site(src_site)
@@ -177,9 +174,9 @@ export class MergeView extends Component {
     {
  
         const des_pos = merge_mgr.instance.get_pos_by_site(des_site)
-        let lev  = this.draggingMan.getComponent("ManUnit").get_data().level
-        let site = this.draggingMan.getComponent("ManUnit").get_data().site
-        let newMan = this.clone_man(this.draggingMan,site,lev);
+        let lev  = this.dragging_man.getComponent(man_unit).get_data().level
+        let site = this.dragging_man.getComponent(man_unit).get_data().site
+        let newMan = this.clone_man(this.dragging_man,site,lev);
         let src_car = this.get_car_by_site(src_site)
         if(src_car)
         {
@@ -187,16 +184,16 @@ export class MergeView extends Component {
             src_car.parent = null
         }
         this.move(newMan,new Vec3(100,0,0))
-        this.move(this.draggingMan,new Vec3(-100,0,0))
-        tween(this.draggingMan).to(0.1,{position:des_pos}).start()
+        this.move(this.dragging_man,new Vec3(-100,0,0))
+        tween(this.dragging_man).to(0.1,{position:des_pos}).start()
         tween(newMan).to(0.1,{position:des_pos}).call(()=>{
             const desData =  merge_mgr.instance.find_card_data_by_site(des_site)
             let car  = this.get_car_by_site(des_site)
-            car.getComponent("ManUnit").updateItem({site:des_site,level:desData.level})
+            car.getComponent(man_unit).update_item({site:des_site,level:desData.level})
             newMan.parent = null;
             if(cb)
             {
-                cb("pp")
+                cb()
             }
         }).start()
     }
@@ -207,7 +204,7 @@ export class MergeView extends Component {
         if(car)
         {
             let data = merge_mgr.instance.find_card_data_by_site(site)
-            car.getComponent("ManUnit").updateItem({site:data.site,level:data.level})
+            car.getComponent(man_unit).update_item({site:data.site,level:data.level})
         }
     }
     private exchange_car(site1,site2)
@@ -239,7 +236,7 @@ export class MergeView extends Component {
           
             let pos = merge_mgr.instance.get_pos_by_site(site2)
             let data = merge_mgr.instance.find_card_data_by_site(site2)
-            car.getComponent("ManUnit").updateItem({level:data.level,site:site2})
+            car.getComponent(man_unit).update_item({level:data.level,site:site2})
             car.position = pos
         }
     }
@@ -275,31 +272,21 @@ export class MergeView extends Component {
         }
     }
     clone_man(man,siteId,lv){
-        let manSnapshot = cc.instantiate(this.pbMan)
+        let manSnapshot = cc.instantiate(this.pb_man)
         manSnapshot.parent = this.node;
         manSnapshot.position = man.position;
         man.getComponent(UIOpacityComponent).opacity = 128;
-        manSnapshot.getComponent('ManUnit').updateItem({site:siteId,level:lv})
+        manSnapshot.getComponent(man_unit).update_item({site:siteId,level:lv})
         return manSnapshot;
     }
     // update (dt) {}
     create_man(site_id,lv)
     {
         let pos = merge_mgr.instance.get_pos_by_site(site_id);
-        let man  = cc.instantiate(this.pbMan) 
+        let man  = cc.instantiate(this.pb_man) 
         man.parent = this.node
         man.position = pos;
-        man.getComponent("ManUnit").updateItem({site:site_id,level:lv})
+        man.getComponent(man_unit).update_item({site:site_id,level:lv})
         return man
     }
-    public onClickAdd()
-    {
-        let manData  = merge_mgr.instance.addMan();
-        if(manData)
-        {
-            let man = this.create_man(manData.site,manData.level);
-            this.manList[manData.site] = man;
-        }
-    }
-
 }

@@ -2,7 +2,7 @@
   "ver": "2.0.14",
   "importer": "typescript",
   "imported": true,
-  "uuid": "8227d11d-37f4-42f2-8ee4-1a74c676e8b1",
+  "uuid": "b60e9866-f7be-4d23-a410-9eb48dbe5e7f",
   "files": [
     ".js",
     ".trans"
@@ -10,6 +10,6 @@
   "subMetas": {},
   "userData": {
     "importAsPlugin": false,
-    "moduleId": "project:///assets/scripts/hall/HallUI.js"
+    "moduleId": "project:///assets/scripts/merge/merge_view.js"
   }
 }

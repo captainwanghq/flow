@@ -7,26 +7,26 @@ export class data_mgr extends base_mgr {
 
     private _money:number = 10000;
     private _daimond:number = 0;
-    public addMoney(money:number):void
+    public add_money(money:number):void
     {
         this._money += money
         event_mgr.getInstance().emit("","updatemoney")
     }
 
-    public getMoney():number{
+    public get_money():number{
         return this._money
     }
 
-    public getMaxCarLevel():number
+    public get_max_car_level():number
     {
         return 50
     }
 
-    public getDiamond():number{
+    public get_diamond():number{
         return this._daimond
     }
 
-    public addDiamond(num:number)
+    public add_diamond(num:number)
     {
         this._daimond += num
     }

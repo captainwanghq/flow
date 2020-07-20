@@ -10,6 +10,6 @@
   "subMetas": {},
   "userData": {
     "importAsPlugin": false,
-    "moduleId": "project:///assets/scripts/merge/ProduceCoin.js"
+    "moduleId": "project:///assets/scripts/merge/produce_coin.js"
   }
 }

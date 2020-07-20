@@ -6,18 +6,18 @@ import { merge_mgr } from './merge_mgr';
 import { data_mgr } from './data_mgr';
 const { ccclass} = _decorator;
 
-enum eCarBoughtState
+enum e_car_bought_state
 {
-    CanBuy = 0,
-    Locked = 1,
-    Bought = 2
+    can_buy = 0,
+    locked = 1,
+    bought = 2
 }
 
-enum eCarBuyType
+enum e_car_buy_type
 {
-    Money = 0,
-    Diamond = 1,
-    Locked = 2
+    money = 0,
+    diamond = 1,
+    locked = 2
 }
 @ccclass('shop_mgr')
 export class shop_mgr extends base_mgr {
@@ -33,26 +33,26 @@ export class shop_mgr extends base_mgr {
           this.buyCarsNum[id] = 0
       }
     }
-    private getDiscountLevel():number
+    private get_discount_level():number
     {
         return 	this.boughDiscount
     }
 
-    private getGainLevel():number
+    private get_gain_level():number
     {
         return this.boughtGain
     }
-    public getPrice(lv:number)
+    public get_price(lv:number)
     {
-        const cfg = cfg_mgr.getInstance().getCar(lv)
+        const cfg = cfg_mgr.getInstance().get_car(lv)
         const  value= Math.pow(cfg.add_gold,this.buyCarsNum[lv-1])
-        const discount = 1- this.getDiscount()/100
+        const discount = 1- this.get_discount()/100
         return cfg.buy_gold*value*discount
     }
-    public getDiscount():number
+    public get_discount():number
     {
-        let lev = this.getDiscountLevel()
-        let shopCfg = cfg_mgr.getInstance().getShopCfg()
+        let lev = this.get_discount_level()
+        let shopCfg = cfg_mgr.getInstance().get_shop_cfg()
         for (let id=0;id<shopCfg.lenght;++id)
         {
             const el = shopCfg[id]
@@ -64,9 +64,9 @@ export class shop_mgr extends base_mgr {
         return 0
     }
 
-    public getGainBuffer():number{
-        const lev = this.getGainLevel()
-        const cfg = cfg_mgr.getInstance().getCar(lev)
+    public get_gain_buffer():number{
+        const lev = this.get_gain_level()
+        const cfg = cfg_mgr.getInstance().get_car(lev)
         if (cfg!=null)
         {
             return cfg.value
@@ -74,19 +74,19 @@ export class shop_mgr extends base_mgr {
         return 0
     }
 
-    public isShopUnlock(carid:number):eCarBuyType 
+    public isShopUnlock(carid:number):e_car_buy_type 
     {
         const lv = merge_mgr.getInstance().find_car_max_level()
-        const cfg = cfg_mgr.getInstance().getCar(lv)
+        const cfg = cfg_mgr.getInstance().get_car(lv)
         if (carid <= cfg.unlock_buy_gold_level)
         {
-            return eCarBuyType.Money
+            return e_car_buy_type.money
         }
         if (carid <= cfg.unlock_buy_diamond_level)
         {
-            return eCarBuyType.Diamond
+            return e_car_buy_type.diamond
         }
-        return eCarBuyType.Locked
+        return e_car_buy_type.locked
     }
 
     public  countBought(lv:number):void
@@ -94,34 +94,34 @@ export class shop_mgr extends base_mgr {
         this.buyCarsNum[lv-1]++
     }
 
-    public  boughtState(type:number,lv:number):eCarBoughtState
+    public  boughtState(type:number,lv:number):e_car_bought_state
     {
-        let currentBuyLevel = this.getGainLevel() + 1
+        let currentBuyLevel = this.get_gain_level() + 1
         if (type == 2)
         {
-            currentBuyLevel = this.getDiscountLevel()
+            currentBuyLevel = this.get_discount_level()
         }
         if (currentBuyLevel == lv)
         {
-            return eCarBoughtState.CanBuy
+            return e_car_bought_state.can_buy
         }
         else if (currentBuyLevel < lv)
         {
-            return eCarBoughtState.Locked
+            return e_car_bought_state.locked
         }
         else if (currentBuyLevel > lv)
         {
-            return eCarBoughtState.Bought
+            return e_car_bought_state.bought
         }
-        return eCarBoughtState.Locked
+        return e_car_bought_state.locked
     }
 
-    public buyCar(cfg,buytype:eCarBuyType)
+    public buyCar(cfg,buytype:e_car_buy_type)
     {
-        if (buytype == eCarBuyType.Money)
+        if (buytype == e_car_buy_type.money)
         {
-            let cost = this.getPrice(cfg.level)
-            let money = data_mgr.getInstance().getMoney()
+            let cost = this.get_price(cfg.level)
+            let money = data_mgr.getInstance().get_money()
             if (money < cost)
             {
             
@@ -131,10 +131,10 @@ export class shop_mgr extends base_mgr {
                 merge_mgr.getInstance().buy_car_by_gold(cfg,cost)
             }
         }
-        else if(buytype == eCarBuyType.Diamond)
+        else if(buytype == e_car_buy_type.diamond)
         {
             let cost = cfg.diamond
-            let money = data_mgr.getInstance().getDiamond()
+            let money = data_mgr.getInstance().get_diamond()
             if (money < cost)
             {
 
@@ -149,14 +149,14 @@ export class shop_mgr extends base_mgr {
     public get_most_effective_car()
     {
         const lv = merge_mgr.getInstance().find_car_max_level()
-        const cfg = cfg_mgr.getInstance().getCar(lv)
+        const cfg = cfg_mgr.getInstance().get_car(lv)
         const lock_id = cfg.unlock_buy_gold_level
         const num = Math.max(lock_id-4,1)
         let result = num
         let d = 999999
         for (let id=num;id<=lock_id;++id)
         {
-            const price = this.getPrice(id)
+            const price = this.get_price(id)
             const car_earnings = cfg.output_gold
             const rate = price/car_earnings
             if (rate < d){

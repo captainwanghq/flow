@@ -1,13 +1,13 @@
 import { _decorator, Component, Node, LabelComponent, SpriteComponent, SpriteFrame, loader, Texture2D } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('ManUnit')
-export class ManUnit extends Component {
+@ccclass('man_unit')
+export class man_unit extends Component {
     _site = 0;
     _data = null;
     start () {
     }
-    updateItem(data)
+    update_item(data)
     {
         this._site = data.site;
         this._data = data;

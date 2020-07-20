@@ -6,7 +6,7 @@ const { ccclass} = _decorator;
 @ccclass('cfg_mgr')
 export class cfg_mgr extends base_mgr {
     _data = data_source;
-    public getCar(lv)
+    public get_car(lv)
     {
        for (let k in this._data.car)
        {
@@ -17,14 +17,14 @@ export class cfg_mgr extends base_mgr {
            }
        }
     }
-    public getCarlist()
+    public get_car_cfg()
     {
   
 
         return this._data.car
     }
 
-    public getShopCfg()
+    public get_shop_cfg()
     {
         return this._data.shop
     }

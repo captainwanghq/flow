@@ -1,11 +1,11 @@
 import { _decorator, Component, LabelComponent, tween, Vec3 } from 'cc';
-import { CfgMgr } from '../data/CfgMgr';
-import { ManUnit } from './ManUnit';
-import { DataMgr } from '../data/DataMgr';
+import { cfg_mgr } from '../data/cfg_mgr';
+import { man_unit } from './man_unit';
+import { data_mgr } from '../data/data_mgr';
 const { ccclass, property } = _decorator;
 
-@ccclass('ProduceCoin')
-export class ProduceCoin extends Component {
+@ccclass('produce_coin')
+export class produce_coin extends Component {
     
     private _timeCount:number = 0
     private _startPos:Vec3 =  new Vec3(0,0,0)
@@ -18,8 +18,8 @@ export class ProduceCoin extends Component {
 
     update (deltaTime: number) {
   
-       let level = this.getComponent(ManUnit)._data.level;
-       let cfg =  CfgMgr.getInstance().getCar(level);
+       let level = this.getComponent(man_unit)._data.level;
+       let cfg =  cfg_mgr.getInstance().get_car(level);
      
        if(cfg!=null)
        {
@@ -37,7 +37,7 @@ export class ProduceCoin extends Component {
                tween(textIncome).to(0.5,{position:nPos}).call(()=>{
                    // textIncome.position = this._startPos
                     textIncome.active = false
-                    DataMgr.getInstance().addMoney(cfg.output_gold)
+                    data_mgr.getInstance().add_money(cfg.output_gold)
                }).start()
            }
        }
