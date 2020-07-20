@@ -158,14 +158,22 @@ export class merge_mgr extends base_mgr
         {
             this.car_data_list.push(new car_data(1,idx,1))
         }
+        this.add_site()
+        this.add_site()
+        this.add_site()
+        this.add_site()
+        this.add_site()
+        this.add_site()
+        this.add_site()
+        this.add_site()
     }
 
-    public add_site(max_site:number)
+    public add_site(max_site:number=12)
     {
         if(this.real_car_site_num < max_site)
         {
             this.real_car_site_num++
-
+            this.car_data_list.push(new car_data(1,this.car_data_list.length,1) )
         }
     }
 
