@@ -165,9 +165,7 @@
       "a": 255
     },
     "_sharedMaterial": null,
-    "_spriteFrame": {
-      "__uuid__": "62f7c45b-44eb-4359-b00e-41f20e172071@f9941"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_fillType": 0,
     "_sizeMode": 2,

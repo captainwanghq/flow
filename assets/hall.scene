@@ -1091,9 +1091,7 @@
       "a": 255
     },
     "_sharedMaterial": null,
-    "_spriteFrame": {
-      "__uuid__": "00c2c292-78d3-4515-9101-6b7504c52868@f9941"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_fillType": 0,
     "_sizeMode": 1,
