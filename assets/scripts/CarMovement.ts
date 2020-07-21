@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec3, quat, tween, game, BoxColliderComponent, ITriggerEvent, View } from 'cc';
+import { _decorator, Component, Node, Vec3, quat, tween, game, BoxColliderComponent, ITriggerEvent, View, director } from 'cc';
 const { ccclass, property } = _decorator;
 
 enum CarState {
@@ -37,6 +37,12 @@ export class CarMovement extends Component {
         {
             tween(this.node).stop().to(0.15,{eulerAngles:new Vec3(0,90,0)}).start()
         }
+        if (this.node.position.y <-5)
+        {
+            //tween(this.node).delay(1).call(()=>{
+                director.loadScene("hall")
+            //}).start()
+        }
     }
 
     private _onTriggerEnter(event:ITriggerEvent)
@@ -45,6 +51,11 @@ export class CarMovement extends Component {
         if (event.otherCollider.node.name == "FinishPlane")
         {
             this._carState =  CarState.Finish
+
+            tween(this.node).delay(1).call(()=>{
+                director.loadScene("hall")
+            }).start()
+            
         }
     }
     public turnFwd(dir:number):void{

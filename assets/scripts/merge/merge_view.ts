@@ -1,4 +1,4 @@
-import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3, sampleAnimationCurve } from 'cc';
+import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3, sampleAnimationCurve, instantiate } from 'cc';
 import { merge_mgr } from '../data/merge_mgr';
 import event_mgr from '../base/event/event_mgr';
 import { man_unit } from './man_unit';
@@ -8,86 +8,27 @@ const { ccclass, property } = _decorator;
 @ccclass('merge_view')
 export class merge_view extends Component {
     @property(Prefab)
-    pb_man:Prefab =null;
+    pb_man:Prefab = null;
+
+    @property(Prefab)
+    pb_site:Prefab =  null;
     selected_id = -1;
     dragging_man = null;
     is_dragging = false;
     car_list:any=[]
     site_list:any=[]
 
-    private build_site(site):Node
-    {
-        for (let id=0;id<this.car_list.length;++id)
-        {
-            let car = this.car_list[id]
-            if(car!=null)
-            {
-                let  car_site = car.getComponent(man_unit).get_data().site
-                let pos =  merge_mgr.instance.get_pos_by_site(car_site)
-                car.position = pos
-            }
-        }
-        return null
-    }
-    /**
-     * 
-     * @param idx 
-     * @param data 
-     */
-    private add_car(idx,data)
-    {
-        return this.create_man(idx,data.level)
-    }
-
-    private get_car_by_site(site)
-    {
-        for (let id=0;id<this.car_list.length;++id)
-        {
-            let el = this.car_list[id]
-            if (el.getComponent(man_unit).get_data().site == site)
-            {
-                return el
-            }
-        }
-        return null
-    }
-
-    private get_car_idx(site)
-    {
-        for (let id=0;id<this.car_list.length;++id)
-        {
-            let el = this.car_list[id]
-            if (el.getComponent(man_unit).get_data().site == site)
-            {
-                return id
-            }
-        }
-        return -1
-    }
-    private snapshot(site)
-    {
-        if (site >= 0)
-        {
-            let car = this.get_car_by_site(site)
-            if(car)
-            {
-                let data = merge_mgr.getInstance().find_card_data_by_site(site)
-                let lv = data.level
-                this.dragging_man = this.clone_man(car,site,lv)     
-            }
-        }
-    }
     start () {
         game.config.showFPS = true
         this.node.setContentSize(cc.view.getVisibleSize());
         
         let car_list = merge_mgr.getInstance().get_car_data_list()
         
-        // for(let idx=0;idx<merge_mgr.instance.get_site_num();++idx)
-        // {
-        //     let site_node = this.build_site(idx)
-        //     this.site_list.push(site_node)
-        // }
+        for(let idx=0;idx<merge_mgr.instance.get_site_num();++idx)
+        {
+            let site_node = this.build_site(idx)
+            this.site_list.push(site_node)
+        }
 
         for (let idx=0;idx<car_list.length;++idx)
         {
@@ -144,7 +85,7 @@ export class merge_view extends Component {
 
 
         event_mgr.instance.on("","buy_car",this.buy_car,this)
-        event_mgr.instance.on("","add_site",this.build_site,this)
+        event_mgr.instance.on("","add_site",this.add_site,this)
     }
     buy_car(data)
     {
@@ -166,6 +107,88 @@ export class merge_view extends Component {
         return -1;
     }
     
+    private add_site(site)
+    {
+        for (let id=0;id<this.car_list.length;++id)
+        {
+            let car = this.car_list[id]
+            if(car!=null)
+            {
+                let  car_site = car.getComponent(man_unit).get_data().site
+                let pos =  merge_mgr.instance.get_pos_by_site(car_site)
+                car.position = pos
+            }
+        }
+
+        let node = this.build_site(this.site_list)
+        this.site_list.push(node)
+        for (let id=0;id<this.site_list.length;++id)
+        {
+            let site_node = this.site_list[id]
+            if(site_node!=null)
+            {
+                let pos = merge_mgr.instance.get_pos_by_site(id)
+                site_node.position = pos
+            }
+        }
+    }
+
+    private build_site(idx:number)
+    {
+       let site_node =  instantiate(this.pb_site)
+       let pos = merge_mgr.instance.get_pos_by_site(idx)
+       site_node.position = pos
+       site_node.parent = this.node
+       return site_node
+    }
+    /**
+     * 
+     * @param idx 
+     * @param data 
+     */
+    private add_car(idx,data)
+    {
+        return this.create_man(idx,data.level)
+    }
+
+    private get_car_by_site(site)
+    {
+        for (let id=0;id<this.car_list.length;++id)
+        {
+            let el = this.car_list[id]
+            if (el.getComponent(man_unit).get_data().site == site)
+            {
+                return el
+            }
+        }
+        return null
+    }
+
+    private get_car_idx(site)
+    {
+        for (let id=0;id<this.car_list.length;++id)
+        {
+            let el = this.car_list[id]
+            if (el.getComponent(man_unit).get_data().site == site)
+            {
+                return id
+            }
+        }
+        return -1
+    }
+    private snapshot(site)
+    {
+        if (site >= 0)
+        {
+            let car = this.get_car_by_site(site)
+            if(car)
+            {
+                let data = merge_mgr.getInstance().find_card_data_by_site(site)
+                let lv = data.level
+                this.dragging_man = this.clone_man(car,site,lv)     
+            }
+        }
+    }
     private destroy_snapshot()
     {
         if (this.dragging_man!=null)
@@ -256,7 +279,7 @@ export class merge_view extends Component {
         }
     }
 
-    check_end(event)
+    private check_end(event)
     {
         let site_id = this.check_site(event.touch.getLocation())
         
@@ -286,7 +309,7 @@ export class merge_view extends Component {
             this.destroy_snapshot()
         }
     }
-    clone_man(man,siteId,lv){
+    private clone_man(man,siteId,lv){
         let manSnapshot = cc.instantiate(this.pb_man)
         manSnapshot.parent = this.node;
         manSnapshot.position = man.position;
@@ -295,7 +318,7 @@ export class merge_view extends Component {
         return manSnapshot;
     }
     // update (dt) {}
-    create_man(site_id,lv)
+    private create_man(site_id,lv)
     {
         let pos = merge_mgr.instance.get_pos_by_site(site_id);
         let man  = cc.instantiate(this.pb_man) 

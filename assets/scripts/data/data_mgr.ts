@@ -81,4 +81,32 @@ export class data_mgr extends base_mgr {
         }
         return new_lev
     }
+
+    public get_level_slider()
+    {
+        let exp =  this.user_exp
+        let all_exp = 0
+        let cur_exp = 0
+        let slider = 0
+
+        let user_level_cfg  = cfg_mgr.instance.get_user_level_cfg()
+        let count = 0
+        for (let key in user_level_cfg)
+        {
+            count++
+        }
+
+        for (let id=1;id<=count;++id)
+        {
+            let item = user_level_cfg[id]
+            all_exp += item.level_up_exp
+            if(exp < all_exp)
+            {
+                cur_exp = all_exp - exp
+                slider = cur_exp/item.level_up_exp
+                break
+            }
+        }
+        return slider
+    }
 }
