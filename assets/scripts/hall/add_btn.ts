@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, SpriteComponent, LabelComponent, Texture2D, loader, SpriteFrame } from 'cc';
 import { merge_mgr } from '../data/merge_mgr';
 import { shop_mgr } from '../data/shop_mgr';
+import event_mgr from '../base/event/event_mgr';
 
 const { ccclass, property } = _decorator;
 
@@ -12,24 +13,30 @@ export class add_btn extends Component {
     car_price:LabelComponent =null
     buy_cfg =null
     start () {
-       const data =  merge_mgr.instance.recommend()
-       this.buy_cfg = data
-       this.car_price.string= shop_mgr.getInstance().get_price(data.level)
-       let path = `icon/${data.level}/texture`
-       if (data.level < 10 )
-       {
-           path = `icon/0${data.level}/texture`
-       }
-       
-       loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
-           const spriteFrame = new SpriteFrame()
-           spriteFrame.texture = texture;
-           this.car_icon.spriteFrame = spriteFrame;
-       }); 
+        this.update_car()
+        event_mgr.getInstance().on("","buy_car",this.update_car,this)
     }
 
     onClickAdd()
     {
-        shop_mgr.getInstance().buyCar(this.buy_cfg,0)
+        shop_mgr.getInstance().buy_car(this.buy_cfg,0)
+    }
+
+    private update_car()
+    {
+        const data =  merge_mgr.instance.recommend()
+        this.buy_cfg = data
+        this.car_price.string= shop_mgr.getInstance().get_price(data.level)
+        let path = `icon/${data.level}/texture`
+        if (data.level < 10 )
+        {
+            path = `icon/0${data.level}/texture`
+        }
+        
+        loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
+            const spriteFrame = new SpriteFrame()
+            spriteFrame.texture = texture;
+            this.car_icon.spriteFrame = spriteFrame;
+        }); 
     }
 }

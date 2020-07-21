@@ -1,12 +1,21 @@
 import { _decorator } from 'cc';
 import base_mgr from '../base/base_mgr';
 import event_mgr from '../base/event/event_mgr';
+import { merge_mgr } from './merge_mgr';
+import { cfg_mgr } from './cfg_mgr';
 const { ccclass} = _decorator;
 @ccclass('data_mgr')
 export class data_mgr extends base_mgr {
 
     private _money:number = 10000;
     private _daimond:number = 0;
+
+    private user_level:number = 1
+
+    private game_level:number = 1
+
+    private user_exp = 0;
+
     public add_money(money:number):void
     {
         this._money += money
@@ -29,5 +38,47 @@ export class data_mgr extends base_mgr {
     public add_diamond(num:number)
     {
         this._daimond += num
+    }
+
+    public add_lev_exp(exp:number)
+    {
+        this.user_exp = this.user_exp + exp 
+        return this.user_exp
+    }
+
+    public exp_2_level()
+    {
+        let exp = this.user_exp
+        let all_exp = 0
+        let lev = this.user_level
+        let new_lev =  lev
+        let max_plane  = 4
+
+        let user_level_cfg  = cfg_mgr.instance.get_user_level_cfg()
+        let count = 0
+        for (let key in user_level_cfg)
+        {
+            count++
+        }
+        for (let id=1;id<=count;++id)
+        {
+            let item = user_level_cfg[id]
+            all_exp += item.level_up_exp
+            if (exp < all_exp)
+            {
+                new_lev = item.user_level
+                max_plane = item.max_plane
+                break
+            }
+        }
+     
+        if (new_lev > lev)
+        {
+            this.user_level = new_lev
+            // 
+            merge_mgr.instance.add_site(max_plane)
+            event_mgr.instance.emit("","add_site")
+        }
+        return new_lev
     }
 }

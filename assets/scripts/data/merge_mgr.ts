@@ -4,6 +4,7 @@ import { cfg_mgr } from "./cfg_mgr";
 import { shop_mgr } from "./shop_mgr";
 import { data_mgr } from "./data_mgr";
 import event_mgr from "../base/event/event_mgr";
+import data from "./data_source";
 class car_data
 {
     public level:number
@@ -158,14 +159,6 @@ export class merge_mgr extends base_mgr
         {
             this.car_data_list.push(new car_data(1,idx,1))
         }
-        this.add_site()
-        this.add_site()
-        this.add_site()
-        this.add_site()
-        this.add_site()
-        this.add_site()
-        this.add_site()
-        this.add_site()
     }
 
     public add_site(max_site:number=12)
@@ -173,7 +166,7 @@ export class merge_mgr extends base_mgr
         if(this.real_car_site_num < max_site)
         {
             this.real_car_site_num++
-            this.car_data_list.push(new car_data(1,this.car_data_list.length,1) )
+            this.car_data_list.push(new car_data(0,this.car_data_list.length,1) )
         }
     }
 
@@ -282,6 +275,17 @@ export class merge_mgr extends base_mgr
         return lev == max_level
     }
 
+    private add_lev_exp(lev:number)
+    {
+        let cfg = cfg_mgr.instance.get_car(lev)
+        if (cfg!=null)
+        {
+            data_mgr.instance.add_lev_exp(cfg.merge_exp)
+            //
+            event_mgr.instance.emit("","update_user_level")
+        }
+    }
+
     public  merge(site1:number,site2:number):number
     {
         if(this.is_valid_site(site1)) return 0;
@@ -296,6 +300,7 @@ export class merge_mgr extends base_mgr
         {
            if (data1.level == data2.level && data1.level>0 && data1.level < this.car_max_level)
            {
+               this.add_lev_exp(data1.level)
                let ret = this.check_car_max_level(data2.level)
                data2.level++
                data1.level=0

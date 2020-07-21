@@ -116,7 +116,7 @@ export class shop_mgr extends base_mgr {
         return e_car_bought_state.locked
     }
 
-    public buyCar(cfg,buytype:e_car_buy_type)
+    public buy_car(cfg,buytype:e_car_buy_type)
     {
         if (buytype == e_car_buy_type.money)
         {

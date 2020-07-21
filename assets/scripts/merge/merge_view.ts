@@ -2,6 +2,7 @@ import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformCompon
 import { merge_mgr } from '../data/merge_mgr';
 import event_mgr from '../base/event/event_mgr';
 import { man_unit } from './man_unit';
+import { cfg_mgr } from '../data/cfg_mgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('merge_view')
@@ -16,6 +17,16 @@ export class merge_view extends Component {
 
     private build_site(site):Node
     {
+        for (let id=0;id<this.car_list.length;++id)
+        {
+            let car = this.car_list[id]
+            if(car!=null)
+            {
+                let  car_site = car.getComponent(man_unit).get_data().site
+                let pos =  merge_mgr.instance.get_pos_by_site(car_site)
+                car.position = pos
+            }
+        }
         return null
     }
     /**
@@ -72,11 +83,11 @@ export class merge_view extends Component {
         
         let car_list = merge_mgr.getInstance().get_car_data_list()
         
-        for(let idx=0;idx<merge_mgr.instance.get_site_num();++idx)
-        {
-            let site_node = this.build_site(idx)
-            this.site_list.push(site_node)
-        }
+        // for(let idx=0;idx<merge_mgr.instance.get_site_num();++idx)
+        // {
+        //     let site_node = this.build_site(idx)
+        //     this.site_list.push(site_node)
+        // }
 
         for (let idx=0;idx<car_list.length;++idx)
         {
@@ -132,7 +143,8 @@ export class merge_view extends Component {
         },this)
 
 
-        event_mgr.getInstance().on("","buy_car",this.buy_car,this)
+        event_mgr.instance.on("","buy_car",this.buy_car,this)
+        event_mgr.instance.on("","add_site",this.build_site,this)
     }
     buy_car(data)
     {
@@ -156,8 +168,11 @@ export class merge_view extends Component {
     
     private destroy_snapshot()
     {
-        this.dragging_man.parent = null
-        this.dragging_man = null
+        if (this.dragging_man!=null)
+        {
+            this.dragging_man.parent = null
+            this.dragging_man = null
+        }
         this.selected_id = -1
         this.is_dragging = false
     }

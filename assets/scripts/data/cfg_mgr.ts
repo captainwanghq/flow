@@ -28,4 +28,9 @@ export class cfg_mgr extends base_mgr {
     {
         return this._data.shop
     }
+
+    public get_user_level_cfg()
+    {
+        return this._data.userlevel
+    }
 }
