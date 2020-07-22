@@ -3,7 +3,7 @@ const { ccclass, property } = _decorator;
 
 @ccclass('list_item')
 export class list_item extends Component {
-    _data = {idx:-1,data:1}
+    _data = {idx:-1,data:null}
 
     start () {
         // Your initialization goes here.
@@ -16,8 +16,8 @@ export class list_item extends Component {
     {
         return this._data
     }
-    update(deltaTime: number)
-    {
-        this.getComponentInChildren(LabelComponent).string = `${this._data.data}`
-    }
+    // update(deltaTime: number)
+    // {
+    //     this.getComponentInChildren(LabelComponent).string = `${this._data.data}`
+    // }
 }

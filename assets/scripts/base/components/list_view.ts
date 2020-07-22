@@ -1,5 +1,6 @@
 import { Component, _decorator, ScrollViewComponent, Prefab, instantiate, Vec3, UITransformComponent } from "cc";
 import { list_item } from "./list_item";
+import event_mgr from "../event/event_mgr";
 
 const { ccclass, property } = _decorator;
 
@@ -22,8 +23,6 @@ export class list_view extends Component
     view_height:number = 900
     start()
     {
-        let test_list = [10,11,12,13]
-        this.set_data(test_list)
         let span = Math.min(this.span_count,this.data_source.length)
         let start_y = 0.5*this.item_height 
         for (let id=0;id<span;++id){
@@ -41,11 +40,13 @@ export class list_view extends Component
         this.node.height = total_height
         this.view_height = this.sroll_view.node.getContentSize().height
         this.half_view_height = this.view_height*0.5
+        console.log('list view start')
     }
 
     set_data(data)
     {
         this.data_source = data
+        console.log('list view set_data')
     }
 
     get_position_in_view(item)
@@ -87,6 +88,8 @@ export class list_view extends Component
                         let new_pos = new Vec3(pos.x,pos.y+offset_y,pos.z)
                         item.position = new_pos
                         item.getComponent(list_item).set_data({idx:new_idx,data:new_info})
+
+                        event_mgr.instance.emit("","scroll_view")
                     }
                 }
             }
@@ -104,6 +107,7 @@ export class list_view extends Component
                         let new_pos = new Vec3(pos.x,-offset_y+pos.y,pos.z)
                         item.position = new_pos
                         item.getComponent(list_item).set_data({idx:new_idx,data:new_info})
+                        event_mgr.instance.emit("","scroll_view")
                     }
                 }
             }

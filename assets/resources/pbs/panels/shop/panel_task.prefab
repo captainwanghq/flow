@@ -356,7 +356,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 563.558,
+      "y": 565,
       "z": 0
     },
     "_lrot": {
@@ -1991,6 +1991,14 @@
       "__id__": 1
     },
     "_enabled": true,
+    "btn_che_ku_0": null,
+    "btn_che_ku_1": null,
+    "btn_te_quan_0": null,
+    "btn_te_quan_1": null,
+    "cheku_scroll": null,
+    "tequan_scroll": null,
+    "cheku_content": null,
+    "tequan_content": null,
     "_id": ""
   },
   {

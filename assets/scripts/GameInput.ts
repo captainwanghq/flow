@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import { CarMovement } from './CarMovement';
+import { pop_mgr } from './base/pop_mgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameInput')
@@ -29,5 +30,6 @@ export class GameInput extends Component {
         {
             this._car.turnFwd(2)
         }
+        // pop_mgr.getInstance().show('pbs/panels/shop/panel_shop',1)
     }
 }
