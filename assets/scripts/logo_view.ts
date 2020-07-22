@@ -3,6 +3,7 @@ import { cfg_mgr } from './data/cfg_mgr';
 import { data_mgr } from './data/data_mgr';
 import { shop_mgr } from './data/shop_mgr';
 import { merge_mgr } from './data/merge_mgr';
+import { scene_mgr } from './base/scene_mgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('LogoView')
@@ -20,8 +21,9 @@ export class LogoView extends Component {
         data_mgr.getInstance()
         shop_mgr.getInstance().start()
         merge_mgr.getInstance().start()
+     
         tween(this.node).delay(1).call(()=>{
-            director.loadScene("hall")
+            scene_mgr.getInstance().load_scene('hall')
         }).start()
     }
 

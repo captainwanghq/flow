@@ -5,6 +5,7 @@ import { shop_mgr } from '../data/shop_mgr';
 import { merge_mgr } from '../data/merge_mgr';
 import event_mgr from '../base/event/event_mgr';
 import util from '../base/util';
+import { pop_mgr } from '../base/pop_mgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('hall_ui')
@@ -19,6 +20,7 @@ export class hall_ui extends Component {
         // Your initialization goes here.
         this.update_money()
         event_mgr.getInstance().on("","updatemoney",this.update_money,this)
+        
     }
     update_money()
     {
@@ -29,5 +31,10 @@ export class hall_ui extends Component {
     on_click_start()
     {
         director.loadScene("flow")
+    }
+
+    on_click_shop()
+    {
+        pop_mgr.getInstance().show('pbs/panels/shop/panel_shop',1)
     }
 }

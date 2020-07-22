@@ -1,4 +1,4 @@
-import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3, sampleAnimationCurve, instantiate } from 'cc';
+import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3, sampleAnimationCurve, instantiate, NodePool } from 'cc';
 import { merge_mgr } from '../data/merge_mgr';
 import event_mgr from '../base/event/event_mgr';
 import { man_unit } from './man_unit';
@@ -18,6 +18,7 @@ export class merge_view extends Component {
     car_list:any=[]
     site_list:any=[]
 
+    car_pool:NodePool = new NodePool()
     start () {
         game.config.showFPS = true
         this.node.setContentSize(cc.view.getVisibleSize());
@@ -193,7 +194,7 @@ export class merge_view extends Component {
     {
         if (this.dragging_man!=null)
         {
-            this.dragging_man.parent = null
+            this.recycle(this.dragging_man)
             this.dragging_man = null
         }
         this.selected_id = -1
@@ -219,7 +220,8 @@ export class merge_view extends Component {
         if(src_car)
         {
             this.remove_car_by_site(src_site)
-            src_car.parent = null
+            //src_car.parent = null
+            this.recycle(src_car)
         }
         this.move(newMan,new Vec3(100,0,0))
         this.move(this.dragging_man,new Vec3(-100,0,0))
@@ -228,7 +230,8 @@ export class merge_view extends Component {
             const desData =  merge_mgr.instance.find_card_data_by_site(des_site)
             let car  = this.get_car_by_site(des_site)
             car.getComponent(man_unit).update_item({site:des_site,level:desData.level})
-            newMan.parent = null;
+            //newMan.parent = null;
+            this.recycle(newMan)
             if(cb)
             {
                 cb()
@@ -310,7 +313,7 @@ export class merge_view extends Component {
         }
     }
     private clone_man(man,siteId,lv){
-        let manSnapshot = cc.instantiate(this.pb_man)
+        let manSnapshot = this.get_car()
         manSnapshot.parent = this.node;
         manSnapshot.position = man.position;
         man.getComponent(UIOpacityComponent).opacity = 128;
@@ -321,10 +324,25 @@ export class merge_view extends Component {
     private create_man(site_id,lv)
     {
         let pos = merge_mgr.instance.get_pos_by_site(site_id);
-        let man  = cc.instantiate(this.pb_man) 
+        let man= this.get_car()
         man.parent = this.node
         man.position = pos;
         man.getComponent(man_unit).update_item({site:site_id,level:lv})
         return man
+    }
+
+    private get_car()
+    {
+        let car =  this.car_pool.get(this.pb_man)
+        if(car == null)
+        {
+            car  = cc.instantiate(this.pb_man) 
+        }
+        return car
+    }
+    private recycle(car)
+    {
+        car.getComponent(UIOpacityComponent).opacity = 255;
+        this.car_pool.put(car)
     }
 }
