@@ -1,4 +1,4 @@
-import { _decorator, Node, director, Scene, game, CanvasComponent } from 'cc';
+import { _decorator, Node, director, Scene, game, CanvasComponent, view, GraphicsComponent, Color, UITransformComponent, TERRAIN_HEIGHT_BASE, Prefab, loader, instantiate } from 'cc';
 import base_mgr from './base_mgr';
 const { ccclass, property } = _decorator;
 
@@ -6,6 +6,7 @@ const { ccclass, property } = _decorator;
 export class scene_mgr extends base_mgr {
     current_scene:Scene = null;
     root_node:Node=null;
+    overlay_node:Node = null;
     constructor()
     {
         super();
@@ -68,13 +69,15 @@ export class scene_mgr extends base_mgr {
         director.loadScene(scenename,this.on_launched.bind(this))
     }
 
-    public add_pop(panel:Node)
+    public add_pop(panel:Node,zindex=0)
     {
         if (this.root_node!=null)
         {   
-            console.log(this.root_node,panel)
-            panel.parent = this.root_node
+            console.log(zindex)
+            this.root_node.insertChild(panel,zindex)
+            // panel.parent = this.root_node
             panel.active = true
         }
     }
+
 }
