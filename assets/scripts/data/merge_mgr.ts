@@ -1,5 +1,5 @@
 import base_mgr from "../base/base_mgr";
-import { Vec3 } from "cc";
+import { Vec3, view } from "cc";
 import { cfg_mgr } from "./cfg_mgr";
 import { shop_mgr } from "./shop_mgr";
 import { data_mgr } from "./data_mgr";
@@ -204,7 +204,8 @@ export class merge_mgr extends base_mgr
         if (site >=0 && this.real_car_site_num > site)
         {
             let pos = all_pos[site]
-            let new_pos = new Vec3(pos.x-360,pos.y-640,pos.z)
+            const size = view.getVisibleSize()
+           let new_pos = new Vec3(pos.x-size.width/2,pos.y-640,pos.z)
             return new_pos
         }
         return Vec3.ZERO

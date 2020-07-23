@@ -1,5 +1,5 @@
-import { _decorator, Node, director, Scene, game, CanvasComponent, view, GraphicsComponent, Color, UITransformComponent, TERRAIN_HEIGHT_BASE, Prefab, loader, instantiate } from 'cc';
-import base_mgr from './base_mgr';
+import { _decorator, Node, director, Scene, game, CanvasComponent } from 'cc';
+import base_mgr from './base_mgr'
 const { ccclass, property } = _decorator;
 
 @ccclass('scene_mgr')
@@ -16,16 +16,19 @@ export class scene_mgr extends base_mgr {
     {
 
     }
-    private toggle_persist_root_node(b:Boolean=true)
+    private toggle_persist_root_node(b:boolean=true)
     {
         if(this.root_node)
         {
             if (game.isPersistRootNode(this.root_node))
             {
+                console.log("isPersistRootNode")
                 game.removePersistRootNode(this.root_node)
+                this.root_node.parent = null
             }
             if (b)
             {
+                console.log("addPersistRootNode")
                 this.root_node.parent = null
                 game.addPersistRootNode(this.root_node)
             }
@@ -34,6 +37,7 @@ export class scene_mgr extends base_mgr {
                 let canvas = scene.getComponentInChildren(CanvasComponent)
                 if (canvas)
                 {
+                    console.log("canvas addChild")
                     canvas.node.addChild(this.root_node)
                 }
             }
@@ -73,9 +77,7 @@ export class scene_mgr extends base_mgr {
     {
         if (this.root_node!=null)
         {   
-            console.log(zindex)
             this.root_node.insertChild(panel,zindex)
-            // panel.parent = this.root_node
             panel.active = true
         }
     }

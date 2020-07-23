@@ -1,4 +1,4 @@
-import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3, sampleAnimationCurve, instantiate, NodePool } from 'cc';
+import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3, sampleAnimationCurve, instantiate, NodePool, view } from 'cc';
 import { merge_mgr } from '../data/merge_mgr';
 import event_mgr from '../base/event/event_mgr';
 import { man_unit } from './man_unit';
@@ -100,6 +100,7 @@ export class merge_view extends Component {
         {
             let car_pos = merge_mgr.instance.get_pos_by_site(i)
             let world_pos = this.getComponent(UITransformComponent).convertToWorldSpaceAR(car_pos);
+            world_pos = world_pos.multiplyScalar(view.getScaleX())
             if(world_pos.x-90<pos.x && world_pos.x+90>pos.x && world_pos.y-90<pos.y && world_pos.y+90>pos.y )
             {
                 return i;
@@ -215,7 +216,7 @@ export class merge_view extends Component {
         const des_pos = merge_mgr.instance.get_pos_by_site(des_site)
         let lev  = this.dragging_man.getComponent(man_unit).get_data().level
         let site = this.dragging_man.getComponent(man_unit).get_data().site
-        let newMan = this.clone_man(this.dragging_man,site,lev);
+        let newMan = this.clone_man(this.dragging_man,des_site,lev);
         let src_car = this.get_car_by_site(src_site)
         if(src_car)
         {
@@ -265,8 +266,10 @@ export class merge_view extends Component {
     }
     private move(targert,pos)
     {
+
+        let scale_pos = pos.multiplyScalar(1/view.getScaleX())
         let originPos = targert.position
-        let nPos = new Vec3(originPos.x+pos.x,originPos.y+pos.y,originPos.z+pos.z)
+        let nPos = new Vec3(originPos.x+scale_pos.x,originPos.y+scale_pos.y,originPos.z)
         targert.position = nPos
     }
     private move_car(site1,site2)
@@ -314,9 +317,10 @@ export class merge_view extends Component {
     }
     private clone_man(man,siteId,lv){
         let manSnapshot = this.get_car()
-        manSnapshot.parent = this.node;
-        manSnapshot.position = man.position;
-        man.getComponent(UIOpacityComponent).opacity = 128;
+        manSnapshot.parent = this.node
+        let pos = merge_mgr.instance.get_pos_by_site(siteId)
+        manSnapshot.position = pos
+        man.getComponent(UIOpacityComponent).opacity = 128
         manSnapshot.getComponent(man_unit).update_item({site:siteId,level:lv})
         return manSnapshot;
     }
