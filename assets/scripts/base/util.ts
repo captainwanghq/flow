@@ -36,6 +36,16 @@ export function move(targert,pos)
 }
 
 class util{
+
+    static to_array(o:Object)
+    {
+        const _array = []
+        for (let k in o)
+        {
+            _array.push(o[k])
+        }
+        return _array
+    }
     static to_auto_fixed(x:number)
     {
         return Math.round(x*100)/100

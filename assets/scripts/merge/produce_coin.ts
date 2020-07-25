@@ -1,6 +1,6 @@
 import { _decorator, Component, LabelComponent, tween, Vec3 } from 'cc';
 import { cfg_mgr } from '../data/cfg_mgr';
-import { man_unit } from './man_unit';
+import { merge_unit } from './merge_unit';
 import { data_mgr } from '../data/data_mgr';
 const { ccclass, property } = _decorator;
 
@@ -18,7 +18,7 @@ export class produce_coin extends Component {
 
     update (deltaTime: number) {
   
-       let level = this.getComponent(man_unit)._data.level;
+       let level = this.getComponent(merge_unit)._data.level;
        let cfg =  cfg_mgr.getInstance().get_car(level);
      
        if(cfg!=null)

@@ -1,20 +1,23 @@
 import { _decorator, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('PopBase')
-export class PopBase extends Component {
-    /* class member could be defined like this */
-    // dummy = '';
-
-    /* use `property` decorator if your want the member to be serializable */
-    // @property
-    // serializableDummy = 0;
-
-    start () {
-        // Your initialization goes here.
+@ccclass('pop_base')
+export class pop_base extends Component {
+    is_created = false
+    onEnable()
+    {
+        if (this.is_created)
+        {
+           this.onShow()
+        }
+        else
+        {
+            this.is_created = true
+        }
     }
 
-    // update (deltaTime: number) {
-    //     // Your update function goes here.
-    // }
+    onShow()
+    {
+
+    }
 }

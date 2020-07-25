@@ -2,7 +2,7 @@
   "ver": "2.0.14",
   "importer": "typescript",
   "imported": true,
-  "uuid": "1237e7c3-64d6-4b9c-bef0-7750355a1569",
+  "uuid": "e0203906-91c7-4be5-9cbb-061ad71c92d9",
   "files": [
     ".js",
     ".trans"
@@ -10,6 +10,6 @@
   "subMetas": {},
   "userData": {
     "importAsPlugin": false,
-    "moduleId": "project:///assets/scripts/merge/man_unit.js"
+    "moduleId": "project:///assets/scripts/pops/pop_site.js"
   }
 }

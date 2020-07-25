@@ -1,8 +1,7 @@
 import { _decorator, Component, ButtonComponent, Prefab, Vec2, UITransformComponent, tween, game, UIOpacityComponent, Vec3, sampleAnimationCurve, instantiate, NodePool, view } from 'cc';
 import { merge_mgr } from '../data/merge_mgr';
 import event_mgr from '../base/event/event_mgr';
-import { man_unit } from './man_unit';
-import { cfg_mgr } from '../data/cfg_mgr';
+import { merge_unit } from './merge_unit';
 const { ccclass, property } = _decorator;
 
 @ccclass('merge_view')
@@ -116,7 +115,7 @@ export class merge_view extends Component {
             let car = this.car_list[id]
             if(car!=null)
             {
-                let  car_site = car.getComponent(man_unit).get_data().site
+                let  car_site = car.getComponent(merge_unit).get_data().site
                 let pos =  merge_mgr.instance.get_pos_by_site(car_site)
                 car.position = pos
             }
@@ -158,7 +157,7 @@ export class merge_view extends Component {
         for (let id=0;id<this.car_list.length;++id)
         {
             let el = this.car_list[id]
-            if (el.getComponent(man_unit).get_data().site == site)
+            if (el.getComponent(merge_unit).get_data().site == site)
             {
                 return el
             }
@@ -171,7 +170,7 @@ export class merge_view extends Component {
         for (let id=0;id<this.car_list.length;++id)
         {
             let el = this.car_list[id]
-            if (el.getComponent(man_unit).get_data().site == site)
+            if (el.getComponent(merge_unit).get_data().site == site)
             {
                 return id
             }
@@ -214,8 +213,8 @@ export class merge_view extends Component {
     {
  
         const des_pos = merge_mgr.instance.get_pos_by_site(des_site)
-        let lev  = this.dragging_man.getComponent(man_unit).get_data().level
-        let site = this.dragging_man.getComponent(man_unit).get_data().site
+        let lev  = this.dragging_man.getComponent(merge_unit).get_data().level
+        let site = this.dragging_man.getComponent(merge_unit).get_data().site
         let newMan = this.clone_man(this.dragging_man,des_site,lev);
         let src_car = this.get_car_by_site(src_site)
         if(src_car)
@@ -230,7 +229,7 @@ export class merge_view extends Component {
         tween(newMan).to(0.1,{position:des_pos}).call(()=>{
             const desData =  merge_mgr.instance.find_card_data_by_site(des_site)
             let car  = this.get_car_by_site(des_site)
-            car.getComponent(man_unit).update_item({site:des_site,level:desData.level})
+            car.getComponent(merge_unit).update_item({site:des_site,level:desData.level})
             //newMan.parent = null;
             this.recycle(newMan)
             if(cb)
@@ -246,7 +245,7 @@ export class merge_view extends Component {
         if(car)
         {
             let data = merge_mgr.instance.find_card_data_by_site(site)
-            car.getComponent(man_unit).update_item({site:data.site,level:data.level})
+            car.getComponent(merge_unit).update_item({site:data.site,level:data.level})
         }
     }
     private exchange_car(site1,site2)
@@ -280,7 +279,7 @@ export class merge_view extends Component {
           
             let pos = merge_mgr.instance.get_pos_by_site(site2)
             let data = merge_mgr.instance.find_card_data_by_site(site2)
-            car.getComponent(man_unit).update_item({level:data.level,site:site2})
+            car.getComponent(merge_unit).update_item({level:data.level,site:site2})
             car.position = pos
         }
     }
@@ -321,7 +320,7 @@ export class merge_view extends Component {
         let pos = merge_mgr.instance.get_pos_by_site(siteId)
         manSnapshot.position = pos
         man.getComponent(UIOpacityComponent).opacity = 128
-        manSnapshot.getComponent(man_unit).update_item({site:siteId,level:lv})
+        manSnapshot.getComponent(merge_unit).update_item({site:siteId,level:lv})
         return manSnapshot;
     }
     // update (dt) {}
@@ -331,7 +330,7 @@ export class merge_view extends Component {
         let man= this.get_car()
         man.parent = this.node
         man.position = pos;
-        man.getComponent(man_unit).update_item({site:site_id,level:lv})
+        man.getComponent(merge_unit).update_item({site:site_id,level:lv})
         return man
     }
 

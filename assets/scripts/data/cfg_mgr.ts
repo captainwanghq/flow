@@ -1,6 +1,7 @@
 import { _decorator } from 'cc';
 import data_source from "./data_source";
 import base_mgr from '../base/base_mgr';
+import util from '../base/util';
 const { ccclass} = _decorator;
 
 @ccclass('cfg_mgr')
@@ -23,14 +24,12 @@ export class cfg_mgr extends base_mgr {
     }
     public get_car_cfg()
     {
-  
-
-        return this._data.car
+        return util.to_array(this._data.car)
     }
 
     public get_shop_cfg()
     {
-        return this._data.shop
+        return util.to_array(this._data.shop)
     }
 
     public get_user_level_cfg()

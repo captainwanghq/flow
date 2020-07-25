@@ -6,6 +6,7 @@ import { merge_mgr } from '../data/merge_mgr';
 import event_mgr from '../base/event/event_mgr';
 import util from '../base/util';
 import { pop_mgr } from '../base/pop_mgr';
+import { scene_mgr } from '../base/scene_mgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('hall_ui')
@@ -30,7 +31,7 @@ export class hall_ui extends Component {
     }
     on_click_start()
     {
-        director.loadScene("flow")
+        scene_mgr.instance.load_scene("flow")
     }
 
     on_click_shop()

@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, Vec3, quat, tween, game, BoxColliderComponent, ITriggerEvent, View, director } from 'cc';
+import { scene_mgr } from './base/scene_mgr';
 const { ccclass, property } = _decorator;
 
 enum CarState {
@@ -40,7 +41,7 @@ export class CarMovement extends Component {
         if (this.node.position.y <-5)
         {
             //tween(this.node).delay(1).call(()=>{
-                director.loadScene("hall")
+                scene_mgr.instance.load_scene("hall")
             //}).start()
         }
     }
@@ -53,7 +54,7 @@ export class CarMovement extends Component {
             this._carState =  CarState.Finish
 
             tween(this.node).delay(1).call(()=>{
-                director.loadScene("hall")
+               scene_mgr.instance.load_scene("hall")
             }).start()
             
         }

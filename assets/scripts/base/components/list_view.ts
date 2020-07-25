@@ -32,6 +32,8 @@ export class list_view extends Component
             item.parent = this.node
             item.position = new Vec3(0,-start_y,0)
             start_y += this.item_height 
+
+            console.log(this.data_source[id],id)
             item.getComponent(list_item).set_data({idx:id,data:this.data_source[id]})
             this.all_items_node.push(item)
         }
@@ -40,13 +42,12 @@ export class list_view extends Component
         this.node.height = total_height
         this.view_height = this.sroll_view.node.getContentSize().height
         this.half_view_height = this.view_height*0.5
-        console.log('list view start')
+        console.log('start')
     }
 
     set_data(data)
     {
-        this.data_source = data
-        console.log('list view set_data')
+        this.data_source = data  
     }
 
     get_position_in_view(item)

@@ -242,7 +242,7 @@ export class merge_mgr extends base_mgr
             let data = this.find_card_data_by_site(new_site)
             data.level = cfg.level
             data_mgr.getInstance().add_money(-cost)
-            shop_mgr.getInstance().countBought(cfg.level)
+            shop_mgr.getInstance().count_bought(cfg.level)
 
             event_mgr.getInstance().emit("","buy_car",{site:new_site,level:cfg.level})
         }

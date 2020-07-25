@@ -52,15 +52,7 @@ export class pop_shop extends Component {
             this.cheku_scroll.node.active = true
 
             let shop_list = cfg_mgr.instance.get_car_cfg()
-            let shop_cfgs = []
-            for (let key in shop_list)
-            {
-                shop_cfgs.push(shop_list[key])
-            }
-            console.log(shop_cfgs)
-            this.cheku_scroll.getComponentInChildren(list_view).set_data(shop_cfgs)
-
-
+            this.cheku_scroll.getComponentInChildren(list_view).set_data(shop_list)
         }
         else if (id == 2){
             this.btn_che_ku_0.node.active = true
@@ -70,8 +62,8 @@ export class pop_shop extends Component {
             this.tequan_scroll.node.active = true
             this.cheku_scroll.node.active = false
     
-            let test_list = [101,111,112,113,114,115,116,117]
-            //this.tequan_scroll.getComponentInChildren(list_view).set_data(test_list)
+            let shop_discount_cfg = cfg_mgr.instance.get_shop_cfg()
+            this.tequan_scroll.getComponentInChildren(list_view).set_data(shop_discount_cfg)
         }
 
     }

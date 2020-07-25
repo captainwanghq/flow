@@ -3,6 +3,7 @@ import base_mgr from '../base/base_mgr';
 import event_mgr from '../base/event/event_mgr';
 import { merge_mgr } from './merge_mgr';
 import { cfg_mgr } from './cfg_mgr';
+import {pop_mgr} from '../base/pop_mgr';
 const { ccclass} = _decorator;
 @ccclass('data_mgr')
 export class data_mgr extends base_mgr {
@@ -26,6 +27,10 @@ export class data_mgr extends base_mgr {
         return this._money
     }
 
+    public get_user_level()
+    {
+        return this.user_level
+    }
     public get_max_car_level():number
     {
         return 50
@@ -78,6 +83,8 @@ export class data_mgr extends base_mgr {
             // 
             merge_mgr.instance.add_site(max_plane)
             event_mgr.instance.emit("","add_site")
+    
+            pop_mgr.instance.show('pbs/panels/shop/panel_site',1)
         }
         return new_lev
     }

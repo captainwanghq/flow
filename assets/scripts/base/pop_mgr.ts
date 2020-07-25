@@ -10,7 +10,6 @@ export class pop_mgr extends base_mgr {
 
     public _show_overlay(b:boolean,bindex=0)
     {
-        console.log(bindex)
         let popname = 'pbs/panels/shop/pop_mask'
         if (this.pop_map.has(popname))
         {

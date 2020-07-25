@@ -6,14 +6,14 @@ import { merge_mgr } from './merge_mgr';
 import { data_mgr } from './data_mgr';
 const { ccclass} = _decorator;
 
-enum e_car_bought_state
+export enum e_car_bought_state
 {
     can_buy = 0,
     locked = 1,
     bought = 2
 }
 
-enum e_car_buy_type
+export enum e_car_buy_type
 {
     money = 0,
     diamond = 1,
@@ -74,27 +74,27 @@ export class shop_mgr extends base_mgr {
         return 0
     }
 
-    public isShopUnlock(carid:number):e_car_buy_type 
+    public is_shop_unlock(level:number):e_car_buy_type 
     {
         const lv = merge_mgr.getInstance().find_car_max_level()
         const cfg = cfg_mgr.getInstance().get_car(lv)
-        if (carid <= cfg.unlock_buy_gold_level)
+        if (level <= cfg.unlock_buy_gold_level)
         {
             return e_car_buy_type.money
         }
-        if (carid <= cfg.unlock_buy_diamond_level)
+        if (level <= cfg.unlock_buy_diamond_level)
         {
             return e_car_buy_type.diamond
         }
         return e_car_buy_type.locked
     }
 
-    public  countBought(lv:number):void
+    public  count_bought(lv:number):void
     {
         this.buyCarsNum[lv-1]++
     }
 
-    public  boughtState(type:number,lv:number):e_car_bought_state
+    public  bought_state(type:number,lv:number):e_car_bought_state
     {
         let currentBuyLevel = this.get_gain_level() + 1
         if (type == 2)
