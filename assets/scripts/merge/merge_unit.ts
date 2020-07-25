@@ -1,4 +1,5 @@
 import { _decorator, Component, LabelComponent, SpriteComponent, SpriteFrame, loader, Texture2D } from 'cc';
+import util from '../base/util'
 const { ccclass, property } = _decorator;
 
 @ccclass('merge_unit')
@@ -13,30 +14,8 @@ export class merge_unit extends Component {
         this._data = data;
         let lv = this.getComponentInChildren(LabelComponent);
         lv.string = data.level.toString();
-        let path = `icon/${data.level}/texture`
-        if (data.level < 10 )
-        {
-            path = `icon/0${data.level}/texture`
-        }
-
-        const texture =  loader.getRes(path,Texture2D)
-        if(texture)
-        {
-            const spriteFrame = new SpriteFrame()
-            spriteFrame.texture = texture;
-            this.node.getComponentInChildren(SpriteComponent).spriteFrame = spriteFrame;
-        }
-        else{
-            loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
-                if(err==null)
-                {
-                    const spriteFrame = new SpriteFrame()
-                    spriteFrame.texture = texture;
-                    this.node.getComponentInChildren(SpriteComponent).spriteFrame = spriteFrame;
-                }
-            });  
-        }
- 
+        let path = `icon/${util.prefix_integer(data.level)}/texture`
+        util.load_sprite(path,this.node.getComponentInChildren(SpriteComponent))
     }
     get_data()
     {

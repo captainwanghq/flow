@@ -27,13 +27,13 @@ export default class event_mgr extends base_mgr
     //     }
     // }
     
-    public  emit(moduleName = "", eventType, data) {
-        this.event_target.emit(`${moduleName}-${eventType}`, data);
+    public  emit(module_name = "", event_type, data) {
+        this.event_target.emit(`${module_name}-${event_type}`, data);
     }
-    public  on(moduleName = "", eventType, callback, target) {
-        this.event_target.on(`${moduleName}-${eventType}`, callback, target);
+    public  on(module_name = "", event_type, callback, target) {
+        this.event_target.on(`${module_name}-${event_type}`, callback, target);
     }
-    public  off(moduleName = "", eventType, callback, target) {
-        this.event_target.off(`${moduleName}-${eventType}`, callback, target);
+    public  off(module_name = "", event_type, callback, target) {
+        this.event_target.off(`${module_name}-${event_type}`, callback, target);
     }
 }

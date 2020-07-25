@@ -34,6 +34,6 @@ export class cfg_mgr extends base_mgr {
 
     public get_user_level_cfg()
     {
-        return this._data.userlevel
+        return  util.to_array(this._data.userlevel)
     }
 }

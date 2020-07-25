@@ -59,13 +59,9 @@ export class data_mgr extends base_mgr {
         let new_lev =  lev
         let max_plane  = 4
 
-        let user_level_cfg  = cfg_mgr.instance.get_user_level_cfg()
-        let count = 0
-        for (let key in user_level_cfg)
-        {
-            count++
-        }
-        for (let id=1;id<=count;++id)
+        let user_level_cfg = cfg_mgr.instance.get_user_level_cfg()
+ 
+        for (let id=0;id<user_level_cfg.length;++id)
         {
             let item = user_level_cfg[id]
             all_exp += item.level_up_exp
@@ -76,14 +72,12 @@ export class data_mgr extends base_mgr {
                 break
             }
         }
-     
         if (new_lev > lev)
         {
             this.user_level = new_lev
             // 
             merge_mgr.instance.add_site(max_plane)
             event_mgr.instance.emit("","add_site")
-    
             pop_mgr.instance.show('pbs/panels/shop/panel_site',1)
         }
         return new_lev
@@ -96,14 +90,8 @@ export class data_mgr extends base_mgr {
         let cur_exp = 0
         let slider = 0
 
-        let user_level_cfg  = cfg_mgr.instance.get_user_level_cfg()
-        let count = 0
-        for (let key in user_level_cfg)
-        {
-            count++
-        }
-
-        for (let id=1;id<=count;++id)
+        let user_level_cfg = cfg_mgr.instance.get_user_level_cfg()
+        for (let id=0;id<user_level_cfg.length;++id)
         {
             let item = user_level_cfg[id]
             all_exp += item.level_up_exp

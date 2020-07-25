@@ -42,7 +42,6 @@ export class list_view extends Component
         this.node.height = total_height
         this.view_height = this.sroll_view.node.getContentSize().height
         this.half_view_height = this.view_height*0.5
-        console.log('start')
     }
 
     set_data(data)
@@ -90,7 +89,7 @@ export class list_view extends Component
                         item.position = new_pos
                         item.getComponent(list_item).set_data({idx:new_idx,data:new_info})
 
-                        event_mgr.instance.emit("","scroll_view")
+                        event_mgr.instance.emit("","scrolling")
                     }
                 }
             }
@@ -108,7 +107,7 @@ export class list_view extends Component
                         let new_pos = new Vec3(pos.x,-offset_y+pos.y,pos.z)
                         item.position = new_pos
                         item.getComponent(list_item).set_data({idx:new_idx,data:new_info})
-                        event_mgr.instance.emit("","scroll_view")
+                        event_mgr.instance.emit("","scrolling")
                     }
                 }
             }

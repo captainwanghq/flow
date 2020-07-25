@@ -1,39 +1,4 @@
-import { Vec3, utils } from "cc"
-
-let handlder_pool:handler[] = []
-let handlder_pool_size = 10
-
-export class handler
-{
-    private cb:Function
-    private host:any
-    private args:any[]
-    constructor(){}
-    init(cb:Function,host=null,...args)
-    {
-        this.cb = cb
-        this.host = host
-        this.args = args
-    }
-    exec(...extras)
-    {
-        this.cb.apply(this.host,this.args.concat(extras))
-    }
-}
-
-export function gen_handler(cb:Function,host:any=null,...args:any[]):handler
-{
-    let single_handler:handler = handlder_pool.length < 0 ? handlder_pool.pop() :new handler()
-    single_handler.init(cb,host,args)
-    return single_handler
-}
-
-export function move(targert,pos)
-{
-    let originPos = targert.position
-    let nPos = new Vec3(originPos.x+pos.x,originPos.y+pos.y,originPos.z+pos.z)
-    targert.position = nPos
-}
+import { Vec3, utils ,loader ,SpriteFrame,Texture2D} from "cc"
 
 class util{
 
@@ -50,7 +15,14 @@ class util{
     {
         return Math.round(x*100)/100
     }
-    
+    static prefix_integer(num)
+    {
+        if (num>0&&num<10)
+        {
+            return `0${num}`
+        }
+        return `${num}`
+    }
     static to_format_big(val,fix_num:number=2,connect_str:string=null,forward:number=0)
     {
         // ae  ad ac ab aa t b m k
@@ -102,6 +74,25 @@ class util{
         else{
             return util.to_format_big(x.toString())
         }
+    }
+
+    static load_sprite(path,sprite)
+    {
+        const texture = loader.getRes(path,Texture2D)
+        if(texture)
+        {
+            const spriteFrame = new SpriteFrame()
+            spriteFrame.texture = texture;
+            sprite.spriteFrame = spriteFrame;
+        }
+        else
+        {
+            loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
+                const spriteFrame = new SpriteFrame()
+                spriteFrame.texture = texture;
+                sprite.spriteFrame = spriteFrame;
+            }); 
+        }    
     }
 }
 

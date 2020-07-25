@@ -3,10 +3,6 @@ const { ccclass, property } = _decorator;
 
 @ccclass('base_mgr')
 export default class base_mgr extends Component {
-    public moduleName: string = "gdkBaseModule";
-    public moduleIndex: number = 0;
-    public moduleData: object = {};
-
     private static _instance = null;
     public static getInstance(): any {
         let Class = this;

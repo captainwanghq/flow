@@ -18,7 +18,7 @@ export class shop_discount_item extends pop_base {
     
     start () {
         this.update_item()
-        event_mgr.instance.on("","scroll_view",this.update_item,this)
+        event_mgr.instance.on("","scrolling",this.update_item,this)
     }
 
     onShow()
@@ -28,28 +28,8 @@ export class shop_discount_item extends pop_base {
     update_item()
     {
         let data = this.getComponent(list_item).get_data().data
-        // this.car_level.string = `${data.level}`
-        // let path = `icon/${data.level}/texture`
-        // if (data.level < 10 )
-        // {
-        //     path = `icon/0${data.level}/texture`
-        // }
         let path = `icon/${data.icon}/texture`
-        const texture = loader.getRes(path,Texture2D)
-        if(texture)
-        {
-            const spriteFrame = new SpriteFrame()
-            spriteFrame.texture = texture;
-            this.icon.spriteFrame = spriteFrame;
-        }
-        else
-        {
-            loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
-                const spriteFrame = new SpriteFrame()
-                spriteFrame.texture = texture;
-                this.icon.spriteFrame = spriteFrame;
-            }); 
-        }
+        util.load_sprite(path,this.icon)
         const ret = shop_mgr.instance.bought_state(data.type,data.level)
         if (ret ==e_car_bought_state.can_buy)
         {

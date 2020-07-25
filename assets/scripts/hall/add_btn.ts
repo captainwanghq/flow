@@ -29,15 +29,7 @@ export class add_btn extends Component {
         this.buy_cfg = data
         let smart_price= util.to_smart_string(shop_mgr.getInstance().get_price(data.level))
         this.car_price.string= `${smart_price}`
-        let path = `icon/${data.level}/texture`
-        if (data.level < 10 )
-        {
-            path = `icon/0${data.level}/texture`
-        }
-        loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
-            const spriteFrame = new SpriteFrame()
-            spriteFrame.texture = texture;
-            this.car_icon.spriteFrame = spriteFrame;
-        }); 
+        let path = `icon/${util.prefix_integer(data.level)}/texture`
+        util.load_sprite(path,this.car_icon)    
     }
 }

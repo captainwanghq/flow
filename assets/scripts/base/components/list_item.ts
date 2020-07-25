@@ -16,8 +16,4 @@ export class list_item extends Component {
     {
         return this._data
     }
-    // update(deltaTime: number)
-    // {
-    //     this.getComponentInChildren(LabelComponent).string = `${this._data.data}`
-    // }
 }

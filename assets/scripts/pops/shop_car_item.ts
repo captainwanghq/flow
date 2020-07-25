@@ -18,7 +18,7 @@ export class shop_car_item extends pop_base {
     
     start () {
         this.update_item()
-        event_mgr.instance.on("","scroll_view",this.update_item,this)
+        event_mgr.instance.on("","scrolling",this.update_item,this)
     }
 
     onShow()
@@ -29,27 +29,8 @@ export class shop_car_item extends pop_base {
     {
         let data = this.getComponent(list_item).get_data().data
         this.car_level.string = `${data.level}`
-        let path = `icon/${data.level}/texture`
-        if (data.level < 10 )
-        {
-            path = `icon/0${data.level}/texture`
-        }
-
-        const texture = loader.getRes(path,Texture2D)
-        if(texture)
-        {
-            const spriteFrame = new SpriteFrame()
-            spriteFrame.texture = texture;
-            this.car_icon.spriteFrame = spriteFrame;
-        }
-        else
-        {
-            loader.loadRes(path, Texture2D ,(err: any, texture: Texture2D) => {
-                const spriteFrame = new SpriteFrame()
-                spriteFrame.texture = texture;
-                this.car_icon.spriteFrame = spriteFrame;
-            }); 
-        }
+        let path = `icon/${util.prefix_integer(data.level)}/texture`
+        util.load_sprite(path,this.car_icon)
         const ret = shop_mgr.instance.is_shop_unlock(data.level)
         if (ret == e_car_buy_type.locked)
         {
