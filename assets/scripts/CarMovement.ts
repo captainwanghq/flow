@@ -31,7 +31,7 @@ export class CarMovement extends Component {
         if (this._carState < CarState.Finish)
         {
             let moveDir = new Vec3(Vec3.FORWARD)
-            let v = moveDir.multiplyScalar(-20*this._deltaTime);
+            let v = moveDir.multiplyScalar(-26*this._deltaTime);
             this.node.translate(v)
         }
         else if(this._carState ==  CarState.Finish )
@@ -70,11 +70,11 @@ export class CarMovement extends Component {
             *   .call(() => { console.log('This is a callback'); })
             *   .by(1, {scale: new Vec3(-1, -1, -1)}, {easing: 'sineOutIn'})
             *   .start()*/
-                tween(this.node).stop().to(0.5,{eulerAngles:new Vec3(0,-90,0)}).start()
+                tween(this.node).stop().to(0.175,{eulerAngles:new Vec3(0,-90,0)}).start()
             }
             else if(dir == 2)
             {
-                tween(this.node).stop().to(0.5,{eulerAngles:new Vec3(0,0,0)}).start()
+                tween(this.node).stop().to(0.175,{eulerAngles:new Vec3(0,0,0)}).start()
             }
         }
     }

@@ -3159,7 +3159,51 @@ const data = {
             task_name_eng: "undefined",
             task_desc_eng: "Get 12 Lv.50 Cars"
         }
+    },
+    sign: {
+        1: {
+            type: 2,
+            reward: 20,
+            multiple_reward: 40,
+            extra_reward: 40
+        },
+        2: {
+            type: 2,
+            reward: 30,
+            multiple_reward: 60,
+            extra_reward: 60
+        },
+        3: {
+            type: 2,
+            reward: 40,
+            multiple_reward: 80,
+            extra_reward: 80
+        },
+        4: {
+            type: 2,
+            reward: 50,
+            multiple_reward: 100,
+            extra_reward: 100
+        },
+        5: {
+            type: 2,
+            reward: 60,
+            multiple_reward: 120,
+            extra_reward: 120
+        },
+        6: {
+            type: 2,
+            reward: 60,
+            multiple_reward: 120,
+            extra_reward: 120
+        },
+        7: {
+            type: 2,
+            reward: 80,
+            multiple_reward: 160,
+            extra_reward: 160
+        }
     }
-};
+}
 
 export default data

@@ -15,7 +15,7 @@ export class hall_ui extends Component {
     money_node:Node = null
     onLoad()
     {
-        
+        console.log(410014e9)
     }
     start () {
         // Your initialization goes here.
@@ -37,5 +37,10 @@ export class hall_ui extends Component {
     on_click_shop()
     {
         pop_mgr.getInstance().show('pbs/panels/shop/panel_shop',1)
+    }
+
+    on_click_sign()
+    {
+        pop_mgr.getInstance().show('pbs/panels/shop/panel_sign',1)
     }
 }

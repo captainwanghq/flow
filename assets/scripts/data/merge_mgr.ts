@@ -5,6 +5,7 @@ import { shop_mgr } from "./shop_mgr";
 import { data_mgr } from "./data_mgr";
 import event_mgr from "../base/event/event_mgr";
 import data from "./data_source";
+import { pop_mgr } from "../base/pop_mgr";
 class car_data
 {
     public level:number
@@ -308,6 +309,7 @@ export class merge_mgr extends base_mgr
                if(ret)
                {
                 //unlock new car
+                pop_mgr.getInstance().show('pbs/panels/shop/panel_car',1)
                }
                return 1
            }
