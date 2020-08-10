@@ -143,7 +143,7 @@
   },
   {
     "__type__": "cc.UITransformComponent",
-    "_name": "",
+    "_name": "bg<UITransformComponent>",
     "_objFlags": 0,
     "node": {
       "__id__": 2
@@ -153,7 +153,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 720,
-      "height": 1480
+      "height": 1600
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -164,7 +164,7 @@
   },
   {
     "__type__": "cc.SpriteComponent",
-    "_name": "",
+    "_name": "bg<SpriteComponent>",
     "_objFlags": 0,
     "node": {
       "__id__": 2
@@ -181,11 +181,11 @@
     },
     "_sharedMaterial": null,
     "_spriteFrame": {
-      "__uuid__": "03c9c7bd-5d1b-442b-b5ec-09bcd9514173@f9941"
+      "__uuid__": "55cfe12b-c4e1-4a4c-8c3b-f93b8977dae1@f9941"
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
